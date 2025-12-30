@@ -4,8 +4,7 @@ import ShareModal from "../../common/shareModal/ShareModal";
 import Spinner, { SpinnerTypes } from "../../common/commonSpinner/Spinner";
 import { Editor } from "@tinymce/tinymce-react";
 import { useCommentContext } from "../../../context/CommentContext";
-
-const PF = import.meta.env.VITE_IMAGE_URL;
+import { PF} from "../../../config";
 
 // Count all nested replies recursively
 const countNestedReplies = (replies) =>

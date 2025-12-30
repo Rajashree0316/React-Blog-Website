@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect, useCallback } from "react";
+import { API,PF } from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaHeart,
@@ -26,7 +27,6 @@ export default function Post({
   hideImageWrapper = false,
   compact = false,
 }) {
-  const PF = import.meta.env.VITE_IMAGE_URL;
   const navigate = useNavigate();
 
   const [authorPic, setAuthorPic] = useState(null);
@@ -90,7 +90,7 @@ export default function Post({
   useEffect(() => {
     const timer = setTimeout(() => {
       setViewsCount((prev) => prev + 1);
-      axios.put(`/api/posts/${post._id}/view`).catch(() => {});
+      axios.put(`${API}/posts/${post._id}/view`).catch(() => {});
     }, 3000);
     return () => clearTimeout(timer);
   }, [post._id]);
@@ -109,8 +109,8 @@ export default function Post({
 
     try {
       const endpoint = updatedLiked
-        ? `/api/posts/${post._id}/like`
-        : `/api/posts/${post._id}/unlike`;
+        ? `${API}/posts/${post._id}/like`
+        : `${API}/posts/${post._id}/unlike`;
       await axios.put(endpoint, { userId: currentUser._id });
 
       // persist in localStorage
@@ -140,8 +140,8 @@ export default function Post({
 
     try {
       const endpoint = updatedSaved
-        ? `/api/posts/${post._id}/save`
-        : `/api/posts/${post._id}/unsave`;
+        ? `${API}/posts/${post._id}/save`
+        : `${API}/posts/${post._id}/unsave`;
       await axios.put(endpoint, { userId: currentUser._id });
 
       // persist in localStorage
@@ -190,7 +190,7 @@ export default function Post({
             : post.userId;
 
         if (!authorId) return;
-        const res = await axios.get(`/api/users/${authorId}`);
+        const res = await axios.get(`${API}/users/${authorId}`);
         setAuthorPic(res.data);
       } catch {
         setAuthorPic(null);

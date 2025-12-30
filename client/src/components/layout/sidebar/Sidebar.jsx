@@ -1,18 +1,18 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from '../../../context/Context';
+import { Context } from "../../../context/Context";
 import "./Sidebar.css";
+import { API, PF } from "../../../config";
 
 export default function Sidebar() {
   const [cats, setCats] = useState([]);
   const { user } = useContext(Context);
-const PF = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     const getCats = async () => {
       try {
-        const res = await axios.get("/api/tags");
+        const res = await axios.get(`${API}/tags`);
         if (Array.isArray(res.data)) {
           setCats(res.data);
         } else {
@@ -32,14 +32,22 @@ const PF = import.meta.env.VITE_IMAGE_URL;
         <span className="sidebarTitle">ABOUT ME</span>
         <img
           src={
-            user?.profilePic
-              ? PF + user.profilePic
+            user?.profilePic?.startsWith("http")
+              ? user.profilePic
+              : user?.profilePic
+              ? `${PF}/${user.profilePic}`
               : "https://i.pinimg.com/236x/1e/3f/58/1e3f587572a7a7b20bbf1828595a1786--holiday-party-themes-holiday-gift-guide.jpg"
           }
           alt="User Profile"
         />
-        <p>Welcome to our blog! Here, we share our thoughts, experiences, and insights on various topics.</p>
-        <p>Our mission is to provide valuable and engaging content to our readers.</p>
+        <p>
+          Welcome to our blog! Here, we share our thoughts, experiences, and
+          insights on various topics.
+        </p>
+        <p>
+          Our mission is to provide valuable and engaging content to our
+          readers.
+        </p>
       </div>
       <div className="sidebarItem">
         <span className="sidebarTitle">TAGS</span>

@@ -1,5 +1,6 @@
 // src/pages/single/Single.jsx
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { API } from "../../config";
 import { useLocation, Link } from "react-router-dom";
 import "./Single.css";
 import SinglePost from "../../components/allPosts/singlepost/SinglePost";
@@ -43,7 +44,7 @@ export default function Single({ postId, currentUser }) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`/api/posts/${postId}`);
+        const res = await axios.get(`${API}/posts/${postId}`);
         setPost(res.data);
       } catch (err) {
         console.error("Error fetching single post", err);
@@ -57,7 +58,7 @@ export default function Single({ postId, currentUser }) {
     const fetchTrending = async () => {
       if (!post?.tags?.length) return;
       try {
-        const res = await axios.get("/api/posts");
+        const res = await axios.get(`${API}/posts`);
         const filtered = res.data.filter(
           (p) =>
             p._id !== post._id && p.tags?.some((tag) => post.tags.includes(tag))
@@ -77,7 +78,8 @@ export default function Single({ postId, currentUser }) {
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
-        const res = await axios.get("/api/posts?sort=New");
+        const res = await axios.get(`${API}/posts?sort=New`);
+
         setRecentPosts(res.data.slice(0, 5)); // limit to 5
       } catch (err) {
         console.error("Error fetching recent posts:", err);
@@ -104,7 +106,7 @@ export default function Single({ postId, currentUser }) {
     if (!currentUser) return alert("Please log in to like posts");
     try {
       const res = await axios.put(
-        `/api/posts/${postId}/${userLiked ? "unlike" : "like"}`,
+        `${API}/posts/${postId}/${userLiked ? "unlike" : "like"}`,
         { userId: currentUser._id }
       );
       setLikesCount(res.data.likesCount);
@@ -119,9 +121,10 @@ export default function Single({ postId, currentUser }) {
     if (!currentUser) return alert("Please log in to save posts");
     try {
       const res = await axios.put(
-        `/api/posts/${postId}/${userSaved ? "unsave" : "save"}`,
+        `${API}/posts/${postId}/${userSaved ? "unsave" : "save"}`,
         { userId: currentUser._id }
       );
+
       setSaveCount(res.data.saveCount);
       setUserSaved(!userSaved);
     } catch (err) {
@@ -193,10 +196,11 @@ export default function Single({ postId, currentUser }) {
                       src={
                         trend.photo
                           ? PF + trend.photo
-                          : "/default-placeholder.jpg"
+                          : PF + "/default-placeholder.jpg"
                       }
                       alt={trend.title}
                     />
+
                     <div className="singleSidePost-info">
                       <h3>
                         {trend.title.length > 50

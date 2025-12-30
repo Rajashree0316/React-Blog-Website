@@ -1,6 +1,7 @@
 // components/FeaturedUserCard/FeaturedUserCard.jsx
 import "./FeaturedUserCard.css";
 import React, { useEffect, useState, useContext } from "react";
+import { API, PF } from "../../../config";
 import axios from "axios";
 import { Context } from "../../../context/Context";
 import { Link } from "react-router-dom";
@@ -9,14 +10,13 @@ import FollowButton from "../../common/followButton/FollowButton";
 const FeaturedUserCard = ({ username }) => {
   const [user, setUser] = useState(null);
   const { user: currentUser } = useContext(Context);
-  const PF = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const basicRes = await axios.get(`/api/users?username=${username}`);
+        const basicRes = await axios.get(`${API}/users?username=${username}`);
         const userId = basicRes.data._id;
-        const fullRes = await axios.get(`/api/users/${userId}`);
+        const fullRes = await axios.get(`${API}/users/${userId}`);
         setUser(fullRes.data);
       } catch (err) {
         console.error("Failed to fetch user:", err);
@@ -45,7 +45,9 @@ const FeaturedUserCard = ({ username }) => {
           <img
             src={
               user.profilePic
-                ? PF + user.profilePic
+                ? user.profilePic.startsWith("http")
+                  ? user.profilePic
+                  : `${PF}/${user.profilePic}`
                 : "/default-placeholder.jpg"
             }
             alt="Profile"

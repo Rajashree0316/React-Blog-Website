@@ -8,6 +8,8 @@ import React, {
   memo,
   useRef,
 } from "react";
+import { API, PF } from "../../config";
+
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
@@ -17,11 +19,19 @@ import { FiExternalLink } from "react-icons/fi";
 import "./PublicProfile.css";
 import FollowButton from "../../components/common/followButton/FollowButton";
 import PrivateProfileView from "../../components/common/privateProfileView/PrivateProfileView";
-import Spinner, { SpinnerTypes } from "../../components/common/commonSpinner/Spinner";
+import Spinner, {
+  SpinnerTypes,
+} from "../../components/common/commonSpinner/Spinner";
 
-const ActivityFeed = lazy(() => import("../../components/activityFeed/ActivityFeed"));
-const RecentComments = lazy(() => import("../../components/activityFeed/RecentComments"));
-const FollowModal = lazy(() => import("../../components/common/followModal/FollowModal"));
+const ActivityFeed = lazy(() =>
+  import("../../components/activityFeed/ActivityFeed")
+);
+const RecentComments = lazy(() =>
+  import("../../components/activityFeed/RecentComments")
+);
+const FollowModal = lazy(() =>
+  import("../../components/common/followModal/FollowModal")
+);
 
 const PublicProfile = () => {
   const { id } = useParams();
@@ -43,14 +53,13 @@ const PublicProfile = () => {
   const isOwnProfile = currentUser?._id === id;
   const isPublicProfile = viewedPreferences?.publicProfile;
   const showFullProfile = isOwnProfile || isPublicProfile;
-  const PF = import.meta.env.VITE_IMAGE_URL;
 
   // ✅ Fetch preferences
   useEffect(() => {
     const fetchPreferences = async () => {
       if (!viewedUserId) return;
       try {
-        const res = await axios.get(`/api/preferences/${viewedUserId}`);
+        const res = await axios.get(`${API}/preferences/${viewedUserId}`);
         setViewedPreferences(res.data);
       } catch (err) {
         if (err.response?.status === 404) {
@@ -70,9 +79,10 @@ const PublicProfile = () => {
   const handleFollowBack = useCallback(
     async (followerId) => {
       try {
-        const res = await axios.put(`/api/users/${followerId}/follow`, {
+        const res = await axios.put(`${API}/users/${followerId}/follow`, {
           userId: currentUser._id,
         });
+
         if (res.status === 200) {
           const updatedUser = {
             ...currentUser,
@@ -100,12 +110,12 @@ const PublicProfile = () => {
   const fetchUser = useCallback(async () => {
     try {
       if (!id) return;
-      const fullRes = await axios.get(`/api/users/${id}`);
+      const fullRes = await axios.get(`${API}/users/${id}`);
       const validated = validateUserData(fullRes.data);
       setViewedUserId(id);
 
       // Fetch saved posts count
-      const savedRes = await axios.get(`/api/users/${id}/bookmarked`);
+      const savedRes = await axios.get(`${API}/users/${id}/bookmarked`);
       validated.savedPostsCount = savedRes.data.length;
 
       setUser(validated);
@@ -122,7 +132,7 @@ const PublicProfile = () => {
     const fetchRecentComments = async () => {
       if (!viewedUserId) return;
       try {
-        const res = await axios.get(`/api/comments/recent/${viewedUserId}`);
+        const res = await axios.get(`${API}/comments/recent/${viewedUserId}`);
         setComments(res.data);
       } catch (err) {
         setComments([]);
@@ -192,7 +202,7 @@ const PublicProfile = () => {
                   src={
                     user.profilePic
                       ? PF + user.profilePic
-                      : "/default-placeholder.jpg"
+                      : PF + "/default-placeholder.jpg"
                   }
                   alt="Profile"
                   className="profile-avatar"
@@ -281,12 +291,17 @@ const PublicProfile = () => {
               {/* ======= THREE INFO CARDS ======= */}
               <div className="info-box">
                 <h3>Exploring</h3>
-                <p>{user.exploring || "Exploring new technologies and ideas."}</p>
+                <p>
+                  {user.exploring || "Exploring new technologies and ideas."}
+                </p>
               </div>
 
               <div className="info-box boxes">
                 <h3>Key Strength</h3>
-                <p>{user.strengths || "Problem solving, collaboration, creativity."}</p>
+                <p>
+                  {user.strengths ||
+                    "Problem solving, collaboration, creativity."}
+                </p>
               </div>
 
               <div className="info-box boxes">
@@ -295,7 +310,10 @@ const PublicProfile = () => {
               </div>
 
               <ul className="stats">
-                <li onClick={() => setShowSavedPosts(false)} className="clickable">
+                <li
+                  onClick={() => setShowSavedPosts(false)}
+                  className="clickable"
+                >
                   📄 <span>{user.postsCount || 0} posts published</span>
                 </li>
                 <li onClick={scrollToRecentComments} className="clickable">
@@ -326,17 +344,23 @@ const PublicProfile = () => {
                 <li className="followed-tags-section slide-up">
                   🔖 <strong>Tags Followed:</strong>
                   <div className="followed-tags-list">
-                    {(showAllTags ? user.followedTags : user.followedTags.slice(0, 8))
+                    {(showAllTags
+                      ? user.followedTags
+                      : user.followedTags.slice(0, 8)
+                    )
                       .filter(Boolean)
                       .map((tagObj, i) => {
-                        const tagName = typeof tagObj === "string" ? tagObj : tagObj.name;
+                        const tagName =
+                          typeof tagObj === "string" ? tagObj : tagObj.name;
                         return (
                           <span
                             key={tagName}
                             className="followed-tag slide-in"
                             style={{ animationDelay: `${i * 0.05}s` }}
                             onClick={() =>
-                              navigate(`/posts?tag=${encodeURIComponent(tagName)}`)
+                              navigate(
+                                `/posts?tag=${encodeURIComponent(tagName)}`
+                              )
                             }
                           >
                             #{tagName}
@@ -364,7 +388,9 @@ const PublicProfile = () => {
                       <span
                         key={tag}
                         className="mentioned-tag slide-in"
-                        onClick={() => navigate(`/posts?tag=${encodeURIComponent(tag)}`)}
+                        onClick={() =>
+                          navigate(`/posts?tag=${encodeURIComponent(tag)}`)
+                        }
                       >
                         #{tag}
                       </span>
@@ -390,12 +416,24 @@ const PublicProfile = () => {
 
             <main className="profile-main">
               <Suspense
-                fallback={<Spinner type={SpinnerTypes.PACMAN} size={70} color="#bc1d3d" />}
+                fallback={
+                  <Spinner
+                    type={SpinnerTypes.PACMAN}
+                    size={70}
+                    color="#bc1d3d"
+                  />
+                }
               >
-                <ActivityFeed userId={viewedUserId} showSaved={showSavedPosts} />
+                <ActivityFeed
+                  userId={viewedUserId}
+                  showSaved={showSavedPosts}
+                />
                 {comments.length > 0 && (
                   <div ref={recentCommentsRef}>
-                    <RecentComments comments={comments} username={user.username} />
+                    <RecentComments
+                      comments={comments}
+                      username={user.username}
+                    />
                   </div>
                 )}
               </Suspense>

@@ -3,6 +3,7 @@ import { Context } from "../../context/Context";
 import axios from "axios";
 import "./Security.css";
 import { toast } from "react-toastify";
+import { API } from "../../config";
 
 export default function Security() {
   const { user, dispatch } = useContext(Context);
@@ -19,11 +20,12 @@ export default function Security() {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const res = await axios.get(`/api/users/${user._id}/sessions`, {
+        const res = await axios.get(`${API}/users/${user._id}/sessions`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+
         setSessions(res.data.sessions);
       } catch (err) {
         console.error("Failed to load sessions", err);
@@ -50,7 +52,7 @@ export default function Security() {
     }
 
     try {
-      const res = await axios.put(`/api/users/${user._id}/password`, {
+      const res = await axios.put(`${API}/users/${user._id}/password`, {
         userId: user._id,
         currentPassword,
         password: newPassword,
@@ -69,7 +71,7 @@ export default function Security() {
   const handleEnable2FA = async () => {
     try {
       const res = await axios.post(
-        `/api/users/${user._id}/enable-2fa`,
+        `${API}/users/${user._id}/enable-2fa`,
         {},
         {
           headers: {
@@ -77,6 +79,7 @@ export default function Security() {
           },
         }
       );
+
       setQrCode(res.data.qrCode);
       toast.info("Scan the QR code and enter the token to verify 2FA.");
     } catch (err) {
@@ -87,7 +90,7 @@ export default function Security() {
   const handleVerifyToken = async () => {
     try {
       const res = await axios.post(
-        `/api/users/${user._id}/validate-2fa`,
+        `${API}/users/${user._id}/validate-2fa`,
         { token },
         {
           headers: {
@@ -95,6 +98,7 @@ export default function Security() {
           },
         }
       );
+
       setTwoFAEnabled(true);
       setQrCode("");
       setToken("");
@@ -107,7 +111,7 @@ export default function Security() {
   const handleDisable2FA = async () => {
     try {
       await axios.post(
-        `/api/users/${user._id}/disable-2fa`,
+        `${API}/users/${user._id}/disable-2fa`,
         {},
         {
           headers: {
@@ -115,6 +119,7 @@ export default function Security() {
           },
         }
       );
+
       setTwoFAEnabled(false);
       setToken("");
       setQrCode("");
@@ -126,7 +131,9 @@ export default function Security() {
 
   const handleRevokeSession = async (sessionId) => {
     try {
-      await axios.post(`/api/users/${user._id}/revoke-session`, { sessionId });
+      await axios.post(`${API}/users/${user._id}/revoke-session`, {
+        sessionId,
+      });
       setSessions((prev) => prev.filter((s) => s._id !== sessionId));
       toast.success("Session revoked.");
     } catch (err) {

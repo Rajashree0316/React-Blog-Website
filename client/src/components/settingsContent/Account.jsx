@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Account.css";
 import { toast } from "react-toastify";
+import { API } from "../../config";
 
 export default function Account() {
   const { user, dispatch } = useContext(Context);
@@ -21,7 +22,7 @@ export default function Account() {
     setUsername(user.username || "");
     setWork(user.work || "");
     setEducation(user.education || "");
-    setLanguage(user.setLanguage || "")
+    setLanguage(user.setLanguage || "");
   }, [user]);
 
   const handleAccountSubmit = async (e) => {
@@ -38,9 +39,10 @@ export default function Account() {
 
     try {
       const res = await axios.put(
-        `/api/users/${user._id}/profile`,
+        `${API}/users/${user._id}/profile`,
         updatedUser
       );
+
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
       toast.success("Changes saved successfully!", {
         autoClose: 3000,
@@ -67,9 +69,10 @@ export default function Account() {
   const onDelete = async () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
       try {
-        await axios.delete(`/api/users/${user._id}`, {
+        await axios.delete(`${API}/users/${user._id}`, {
           data: { userId: user._id },
         });
+
         dispatch({ type: "LOGOUT" });
         navigate("/register");
       } catch {

@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./PersonalBlogs.css";
 import Post from "../../components/allPosts/post/Post";
-import Spinner, { SpinnerTypes } from "../../components/common/commonSpinner/Spinner";
+import Spinner, {
+  SpinnerTypes,
+} from "../../components/common/commonSpinner/Spinner";
 import { useNavigate } from "react-router-dom";
+import { API } from "../../config";
 
 const PersonalBlogs = () => {
   const [posts, setPosts] = useState([]);
@@ -15,7 +18,7 @@ const PersonalBlogs = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`/api/posts?user=${username}`);
+        const res = await axios.get(`${API}/posts?user=${username}`);
         setPosts(res.data);
       } catch (err) {
         console.error("Error fetching Rajashree's posts", err);
@@ -30,17 +33,12 @@ const PersonalBlogs = () => {
   if (loading)
     return (
       <div className="spinner-wrapper">
-        <Spinner
-          type={SpinnerTypes.RING}
-          size={120}
-          color="#d49931"
-        />
+        <Spinner type={SpinnerTypes.RING} size={120} color="#d49931" />
       </div>
     );
 
   return (
     <div className="personal-blogs-container">
-
       {/* ✨ NEW: Back Button */}
       <button className="back-btn" onClick={() => navigate("/about")}>
         ← Back

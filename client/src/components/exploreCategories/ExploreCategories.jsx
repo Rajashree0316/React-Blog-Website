@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API } from "../../config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCompass, FaBookOpen, FaCode, FaHeart } from "react-icons/fa";
@@ -13,7 +14,7 @@ export default function ExploreCategories() {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await axios.get("/api/tags");
+        const res = await axios.get(`${API}/tags`);
         setTags(res.data || []);
       } catch (err) {
         console.error("Error fetching tags:", err);

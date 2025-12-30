@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
+import { API } from "../../config";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import { Link, useNavigate } from "react-router-dom";
@@ -80,7 +81,7 @@ export default function Write() {
       newPost.photo = filename;
 
       try {
-        await axios.post("/api/upload", data);
+        await axios.post(`${API}/upload`, data);
       } catch (err) {
         console.error("Image upload failed:", err);
         setFileError("Image upload failed. Please try again.");
@@ -91,7 +92,7 @@ export default function Write() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("/api/posts", newPost);
+      const res = await axios.post(`${API}/posts`, newPost);
       navigate(`/post/${res.data._id}`);
     } catch (err) {
       console.error("Post creation failed:", err);

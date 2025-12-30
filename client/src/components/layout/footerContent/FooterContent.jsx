@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./FooterContent.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API } from "../../../config";
 
 export default function FooterContent() {
   const [tags, setTags] = useState([]);
@@ -10,7 +11,7 @@ export default function FooterContent() {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await axios.get("/api/tags");
+        const res = await axios.get(`${API}/tags`);
         setTags(res.data || []);
       } catch (err) {
         console.error("Failed to fetch tags:", err);

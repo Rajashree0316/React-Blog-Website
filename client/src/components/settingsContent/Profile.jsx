@@ -3,10 +3,10 @@ import { Context } from "../../context/Context";
 import axios from "axios";
 import "./Profile.css";
 import { toast } from "react-toastify";
+import { API, PF } from "../../config";
 
 export default function Profile() {
   const { user, dispatch } = useContext(Context);
-  const PF = import.meta.env.VITE_IMAGE_URL;
 
   const [file, setFile] = useState(null);
   const [fields, setFields] = useState({
@@ -77,7 +77,7 @@ export default function Profile() {
       updatedUser.profilePic = filename;
 
       try {
-        await axios.post("/api/upload", data);
+        await axios.post(`${API}/upload`, data);
       } catch (err) {
         setError("Failed to upload profile picture.");
         return;
@@ -85,7 +85,11 @@ export default function Profile() {
     }
 
     try {
-      const res = await axios.put(`/api/users/${user._id}/profile`, updatedUser);
+      const res = await axios.put(
+        `${API}/users/${user._id}/profile`,
+        updatedUser
+      );
+
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
 
       // Update fields and keep the updated values in the form
@@ -146,8 +150,10 @@ export default function Profile() {
             file
               ? URL.createObjectURL(file)
               : user.profilePic
-              ? PF + user.profilePic
-              : "default-placeholder.jpg"
+              ? user.profilePic.startsWith("http")
+                ? user.profilePic
+                : `${PF}/${user.profilePic}`
+              : "/default-placeholder.jpg"
           }
           alt="Profile"
           className="profileImagePreview"

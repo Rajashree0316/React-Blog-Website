@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./FollowModal.css";
-
+import { API, PF } from "../../../config";
 const FollowModal = ({ show, onClose, userId, type }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const IMAGE_BASE =
-    import.meta.env.VITE_IMAGE_BASE_URL || "http://localhost:5000/images";
 
   useEffect(() => {
     document.body.style.overflow = show ? "hidden" : "";
@@ -30,9 +27,11 @@ const FollowModal = ({ show, onClose, userId, type }) => {
       try {
         const endpoint =
           type === "followers"
-            ? `/api/users/${userId}/followers`
-            : `/api/users/${userId}/followings`;
+            ? `${API}/users/${userId}/followers`
+            : `${API}/users/${userId}/followings`;
+
         const res = await axios.get(endpoint);
+
         setUsers(res.data || []);
       } catch (err) {
         console.error(`Error fetching ${type}:`, err);
@@ -70,7 +69,7 @@ const FollowModal = ({ show, onClose, userId, type }) => {
                     user.profilePic?.startsWith("http")
                       ? user.profilePic
                       : user.profilePic
-                      ? `${IMAGE_BASE}/${user.profilePic}`
+                      ? `${PF}/${user.profilePic}`
                       : "/default-placeholder.jpg"
                   }
                   alt="avatar"

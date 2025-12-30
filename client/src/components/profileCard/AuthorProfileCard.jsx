@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API, PF } from "../../config";
+
 import "./AuthorProfileCard.css";
 import { useNavigate } from "react-router-dom";
 import Spinner, { SpinnerTypes } from "../common/commonSpinner/Spinner";
@@ -17,8 +19,8 @@ const AuthorProfileCard = () => {
     const fetchData = async () => {
       try {
         const [authorRes, postsRes] = await Promise.all([
-          axios.get(`/api/users/username/${username}`),
-          axios.get(`/api/posts?user=${username}`),
+          axios.get(`${API}/users/username/${username}`),
+          axios.get(`${API}/posts?user=${username}`),
         ]);
         setAuthor(authorRes.data);
         setBlogCount(postsRes.data.length);
@@ -36,7 +38,7 @@ const AuthorProfileCard = () => {
   useEffect(() => {
     const fetchReaders = async () => {
       try {
-        const res = await axios.get(`/api/users/readers/${username}`);
+        const res = await axios.get(`${API}/users/readers/${username}`);
         if (Array.isArray(res.data)) {
           setReaders(res.data);
         } else {
@@ -60,7 +62,7 @@ const AuthorProfileCard = () => {
 
   return (
     <div className="blogSpace-profile-card">
-      <img
+      {/* <img
         src={
           author.profilePic?.startsWith("http")
             ? author.profilePic
@@ -69,6 +71,18 @@ const AuthorProfileCard = () => {
         alt={author.username}
         onError={(e) => {
           e.target.src = "https://randomuser.me/api/portraits/women/44.jpg";
+        }}
+      /> */}
+
+      <img
+        src={
+          author.profilePic?.startsWith("http")
+            ? author.profilePic
+            : PF + author.profilePic
+        }
+        alt={author.username}
+        onError={(e) => {
+          e.target.src = PF + "default-placeholder.jpg";
         }}
       />
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API } from "../../config";
 import axios from "axios";
 import "./ActivityFeed.css";
 import PostCard from "../common/postCard/PostCard";
@@ -12,8 +13,8 @@ const ActivityFeed = ({ userId, showSaved = false }) => {
     const fetchPosts = async () => {
       try {
         const url = showSaved
-          ? `/api/posts/saved/${userId}`
-          : `/api/posts?userId=${userId}`; // ✅ use userId, not username
+          ? `${API}/posts/saved/${userId}`
+          : `${API}/posts?userId=${userId}`;
         const res = await axios.get(url);
         setPosts(res.data);
       } catch (err) {

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useCallback, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { API } from "../config";
 const CommentContext = createContext(null);
 
 export const CommentProvider = ({ postId, currentUser, children }) => {
@@ -18,7 +18,7 @@ export const CommentProvider = ({ postId, currentUser, children }) => {
     if (!postId) return;
     setLoading(true);
     try {
-      const res = await axios.get(`/api/comments/${postId}`);
+      const res = await axios.get(`${API}/comments/${postId}`);
       const sorted = isNewestFirst ? res.data.slice().reverse() : res.data;
       setComments(sorted);
     } catch (err) {
@@ -63,7 +63,7 @@ export const CommentProvider = ({ postId, currentUser, children }) => {
   const handleDelete = async (commentId) => {
     if (!currentUser?._id) return toast.error("Login required to delete comment.");
     try {
-      const res = await axios.delete(`/api/comments/${commentId}`, {
+      const res = await axios.delete(`${API}/comments/${commentId}`, {
         data: { userId: currentUser._id },
       });
 
@@ -87,7 +87,7 @@ export const CommentProvider = ({ postId, currentUser, children }) => {
   const handleVote = async (commentId, type) => {
     if (!currentUser?._id) return toast.error(`Please log in to ${type} comments.`);
     try {
-      const res = await axios.post(`/api/comments/${commentId}/${type}`, { userId: currentUser._id });
+      const res = await axios.post(`${API}/comments/${commentId}/${type}`, { userId: currentUser._id });
 
       // Recursively update votes in nested comments
       const updateVotes = (list) =>
@@ -115,7 +115,7 @@ export const CommentProvider = ({ postId, currentUser, children }) => {
   }
 
   try {
-    const res = await axios.post("/api/comments", { postId, text, userId: currentUser._id });
+    const res = await axios.post("${API}/comments", { postId, text, userId: currentUser._id });
     handleAddComment(res.data);
 
     // ✅ Update localStorage for userCommented
@@ -142,7 +142,7 @@ export const CommentProvider = ({ postId, currentUser, children }) => {
   if (!text || text.replace(/<(.|\n)*?>/g, "").trim() === "") return toast.error("Reply cannot be empty.");
 
   try {
-    const res = await axios.post(`/api/comments/reply/${parentId}`, { userId: currentUser._id, text });
+    const res = await axios.post(`${API}/comments/reply/${parentId}`, { userId: currentUser._id, text });
     handleAddReply(parentId, res.data);
 
     // ✅ Update localStorage for userCommented

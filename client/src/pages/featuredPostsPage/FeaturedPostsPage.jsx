@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API } from "../../config";
 import axios from "axios";
 import "./FeaturedPostsPage.css";
 import Post from "../../components/allPosts/post/Post";
@@ -11,7 +12,7 @@ export default function FeaturedPostsPage() {
   useEffect(() => {
     const fetchFeaturedPosts = async () => {
       try {
-        const res = await axios.get("/api/posts/featured");
+const res = await axios.get(`${API}/posts/featured`);
         setFeaturedPosts((res.data || []).filter((post) => post.featured));
       } catch (err) {
         console.error("Failed to fetch featured posts:", err);

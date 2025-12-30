@@ -1,16 +1,16 @@
 // src/widgets/recentPosts/RecentPosts.jsx
 import React, { useEffect, useState } from "react";
+import { API, PF } from "../../../config";
 import axios from "axios";
 import "./RecentPosts.css";
 
 export default function RecentPosts() {
   const [recentPosts, setRecentPosts] = useState([]);
-const PF = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
-        const res = await axios.get("/api/posts");
+        const res = await axios.get(`${API}/posts`);
         setRecentPosts(res.data.slice(0, 4));
       } catch (error) {
         console.error("Error fetching recent posts:", error);
@@ -34,9 +34,19 @@ const PF = import.meta.env.VITE_IMAGE_URL;
       <h2>Recent Posts</h2>
       <div className="sidePost-cards">
         {recentPosts.map((post) => (
-          <a href={`/post/${post._id}`} className="sidePost-card" key={post._id}>
+          <a
+            href={`/post/${post._id}`}
+            className="sidePost-card"
+            key={post._id}
+          >
             <img
-              src={post.photo ? PF + post.photo : "/default-placeholder.jpg"}
+              src={
+                post.photo
+                  ? post.photo.startsWith("http")
+                    ? post.photo
+                    : `${PF}/${post.photo}`
+                  : "/default-placeholder.jpg"
+              }
               alt={post.title}
             />
             <div className="sidePost-info">
@@ -50,7 +60,9 @@ const PF = import.meta.env.VITE_IMAGE_URL;
           </a>
         ))}
       </div>
-      <a href="/blogs" className="view-all-link">View All</a>
+      <a href="/blogs" className="view-all-link">
+        View All
+      </a>
     </div>
   );
 }

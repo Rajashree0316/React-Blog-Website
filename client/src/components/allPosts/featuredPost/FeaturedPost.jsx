@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./FeaturedPost.css";
+import { PF} from "../../../config";
 
 export default function FeaturedPost({
   post,
   layout = "row",
   showLabel = true,
 }) {
-  const PF = import.meta.env.VITE_IMAGE_URL;
 
   const imgSrc =
     post.photo && post.photo.trim() !== ""

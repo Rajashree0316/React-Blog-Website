@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { API, PF } from "../../config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Spinner, { SpinnerTypes } from "../../components/common/commonSpinner/Spinner";
+import Spinner, {
+  SpinnerTypes,
+} from "../../components/common/commonSpinner/Spinner";
 import "./ReadersList.css";
 
 const ReadersList = () => {
@@ -12,14 +15,14 @@ const ReadersList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  const username = "rajashreeasok16"; 
+  const username = "rajashreeasok16";
   const navigate = useNavigate();
   const itemsPerPage = 8;
 
   useEffect(() => {
     const fetchReaders = async () => {
       try {
-        const res = await axios.get(`/api/users/readers/${username}`);
+        const res = await axios.get(`${API}/users/readers/${username}`);
         const arr = Array.isArray(res.data) ? res.data : [];
         setReaders(arr);
         setFilteredReaders(arr);
@@ -44,14 +47,20 @@ const ReadersList = () => {
   // 🔽 Sorting
   useEffect(() => {
     let sorted = [...filteredReaders];
-    if (sort === "newest") sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    if (sort === "alphabetical") sorted.sort((a, b) => a.username.localeCompare(b.username));
-    if (sort === "posts") sorted.sort((a, b) => (b.postCount || 0) - (a.postCount || 0));
+    if (sort === "newest")
+      sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    if (sort === "alphabetical")
+      sorted.sort((a, b) => a.username.localeCompare(b.username));
+    if (sort === "posts")
+      sorted.sort((a, b) => (b.postCount || 0) - (a.postCount || 0));
     setFilteredReaders(sorted);
   }, [sort]);
 
   // 🔁 Pagination compute
-  const paginated = filteredReaders.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  const paginated = filteredReaders.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
   const totalPages = Math.ceil(filteredReaders.length / itemsPerPage);
 
   if (loading)
@@ -63,7 +72,6 @@ const ReadersList = () => {
 
   return (
     <div className="readers-wrapper">
-
       {/* ===== HEADING ===== */}
       <div className="commonHeadings">
         <h2>Readers Community 👥</h2>
@@ -87,7 +95,11 @@ const ReadersList = () => {
       </div>
 
       {/* ===== GRID CARDS ===== */}
-      <div className={`readers-grid ${paginated.length === 1 ? "single-reader" : ""}`}>
+      <div
+        className={`readers-grid ${
+          paginated.length === 1 ? "single-reader" : ""
+        }`}
+      >
         {paginated.length > 0 ? (
           paginated.map((reader) => {
             const joinDate = reader.createdAt
@@ -105,8 +117,8 @@ const ReadersList = () => {
                     reader.profilePic
                       ? reader.profilePic.startsWith("http")
                         ? reader.profilePic
-                        : `http://localhost:5000/images/${reader.profilePic}`
-                      : "https://randomuser.me/api/portraits/lego/1.jpg"
+                        : PF + reader.profilePic
+                      : PF + "default-placeholder.jpg"
                   }
                   alt={reader.username}
                   onClick={() => navigate(`/profile/${reader._id}`)}
@@ -122,7 +134,9 @@ const ReadersList = () => {
             );
           })
         ) : (
-          <p className="no-readers">No readers yet — the journey is just starting 💫</p>
+          <p className="no-readers">
+            No readers yet — the journey is just starting 💫
+          </p>
         )}
       </div>
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API } from "../../config";
 import { useLocation, useNavigate } from "react-router-dom";
 import Post from "../../components/allPosts/post/Post";
 import "./SearchResults.css";
@@ -19,8 +20,8 @@ export default function SearchResults() {
       setLoading(true);
       try {
         const url = tag
-          ? `/api/posts?tag=${encodeURIComponent(tag)}`
-          : `/api/posts/search?query=${encodeURIComponent(query)}`;
+          ? `${API}/posts?tag=${encodeURIComponent(tag)}`
+          : `${API}/posts/search?query=${encodeURIComponent(query)}`;
 
         const res = await fetch(url);
         const data = await res.json();
@@ -58,7 +59,11 @@ export default function SearchResults() {
 
       <div className="highlighted-tags">
         {highlightedTags.map((t) => (
-          <button key={t} className="highlight clickable" onClick={() => handleTagClick(t)}>
+          <button
+            key={t}
+            className="highlight clickable"
+            onClick={() => handleTagClick(t)}
+          >
             #{t}
           </button>
         ))}

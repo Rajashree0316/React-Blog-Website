@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API } from "../../../config";
 import "./DailyWisdom.css";
 import Spinner from "../../common/commonSpinner/Spinner";
 import { SpinnerTypes } from "../../common/commonSpinner/Spinner";
@@ -11,7 +12,8 @@ export default function DailyWisdom() {
   useEffect(() => {
     const fetchDailyQuote = async () => {
       try {
-        const response = await fetch("/api/quote");
+        const response = await fetch(`${API}/quote`);
+
         if (!response.ok) throw new Error("Failed to fetch quote");
         const data = await response.json();
         setQuote({ text: data.text, author: data.author });
@@ -28,11 +30,9 @@ export default function DailyWisdom() {
 
   return (
     <div className="sideContainer">
-      <h3 className="sideContainer-headings">
-      Quote of the Day
-      </h3>
+      <h3 className="sideContainer-headings">Quote of the Day</h3>
       <hr className="divider" />
-      
+
       <div className="quote-card">
         <div className="emoji">💡</div>
         {loading ? (

@@ -1,6 +1,7 @@
 // components/QuickStats.jsx
 import React, { useEffect, useState } from "react";
 import "./BlogStats.css";
+import { API } from "../../../config";
 
 export default function BlogStats() {
   const [stats, setStats] = useState(null);
@@ -8,7 +9,7 @@ export default function BlogStats() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("/api/stats");
+        const res = await fetch(`${API}/stats`);
         const data = await res.json();
         setStats(data);
       } catch (err) {

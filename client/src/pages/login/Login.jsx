@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import { validatePassword } from "../../utils/validation";
 import "./Login.css";
+import { API } from "../../config";
 
 export default function Login() {
   const [error, setError] = useState("");
@@ -41,13 +42,13 @@ export default function Login() {
     dispatch({ type: "LOGIN_START" });
 
     try {
-      const res = await axios.post("/api/auth/login", {
+      const res = await axios.post(`${API}/auth/login`, {
         username,
         password,
       });
 
-localStorage.setItem("user", JSON.stringify(res.data.user));
-localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("token", res.data.token);
 
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -95,8 +96,7 @@ localStorage.setItem("token", res.data.token);
               Forgot password?
             </Link>
             <Link className="noUnderline" to="/register">
-              Don't have an account?{" "}
-              <span className="signupLink">Sign up</span>
+              Don't have an account? <span className="signupLink">Sign up</span>
             </Link>
           </div>
         </form>

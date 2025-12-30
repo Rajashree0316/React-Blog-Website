@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API } from "../../../config";
 import "./SearchPopup.css";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +12,7 @@ const SearchPopup = ({ onClose }) => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await fetch("/api/tags");
+        const res = await fetch(`${API}/tags`);
         const data = await res.json();
         console.log("Fetched tags:", data);
 

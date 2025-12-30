@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { API } from "../../config";
 import axios from "axios";
 import "./Preferences.css";
 import { Context } from "../../context/Context";
@@ -24,7 +25,8 @@ export default function Preferences() {
 
     const fetchPreferences = async () => {
       try {
-        const res = await axios.get(`/api/preferences/${user._id}`);
+        const res = await axios.get(`${API}/preferences/${user._id}`);
+
         setPreferences(res.data);
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(res.data));
       } catch {
@@ -48,7 +50,7 @@ export default function Preferences() {
 
   const handleSave = () => {
     axios
-      .put(`/api/preferences/${user._id}`, preferences)
+      .put(`${API}/preferences/${user._id}`, preferences)
       .then(() => alert("Preferences saved!"))
       .catch(() => alert("Error saving preferences"));
   };
@@ -72,9 +74,7 @@ export default function Preferences() {
           Notifications
         </button>
         <button
-          className={`tabButton ${
-            activeTab === "privacy" ? "active" : ""
-          }`}
+          className={`tabButton ${activeTab === "privacy" ? "active" : ""}`}
           onClick={() => setActiveTab("privacy")}
         >
           Privacy

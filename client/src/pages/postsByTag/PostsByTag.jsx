@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { API } from "../../config";
 import axios from "axios";
 import Post from "../../components/allPosts/post/Post";
 import SortFilterBar from "../../components/common/sortFilterBar/SortFilterBar";
@@ -39,8 +40,8 @@ export default function PostsByTag() {
         setLoading(true);
 
         const [postRes, tagRes] = await Promise.all([
-          axios.get(`/api/tags/${encodeURIComponent(tag)}/posts`),
-          axios.get(`/api/tags?sort=popular`),
+          axios.get(`${API}/tags/${encodeURIComponent(tag)}/posts`),
+          axios.get(`${API}/tags?sort=popular`),
         ]);
 
         const foundTag = tagRes.data.find(
@@ -80,10 +81,11 @@ export default function PostsByTag() {
     setFollowLoading(true);
     try {
       const endpoint = isFollowing
-        ? `/api/tags/unfollow/${tag}`
-        : `/api/tags/follow/${tag}`;
+        ? `${API}/tags/unfollow/${tag}`
+        : `${API}/tags/follow/${tag}`;
 
       await axios.put(endpoint, { userId: user._id });
+
       setIsFollowing(!isFollowing);
 
       // ✅ Update local user context

@@ -6,6 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Editor } from "@tinymce/tinymce-react";
 import "./SinglePost.css";
+import { API, PF } from "../../../config";
 
 export default function SinglePost() {
   const { user } = useContext(Context);
@@ -25,14 +26,12 @@ export default function SinglePost() {
   const [inputValue, setInputValue] = useState("");
   const [tags, setTags] = useState([]);
 
-  const PF = import.meta.env.VITE_IMAGE_URL;
-
   const editorRef = useRef(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`/api/posts/${path}`);
+        const res = await axios.get(`${API}/posts/${path}`);
         const p = res.data;
         setPost(p);
         setTitle(p.title);
@@ -41,14 +40,14 @@ export default function SinglePost() {
         setSelectedTags(p.tags || []);
         if (p?.userId) {
           try {
-            const res = await axios.get(`/api/users/${p.userId}`);
+            const res = await axios.get(`${API}/users/${p.userId}`);
             setAuthorProfile(res.data);
           } catch (err) {
             console.error("Error fetching author profile:", err);
           }
         } else if (p?.username) {
           try {
-            const res = await axios.get(`/api/users?username=${p.username}`);
+            const res = await axios.get(`${API}/users?username=${p.username}`);
             setAuthorProfile(res.data);
           } catch (err) {
             console.error("Error fetching author by username:", err);
@@ -61,7 +60,7 @@ export default function SinglePost() {
 
     const fetchTags = async () => {
       try {
-        const tagRes = await axios.get("/api/tags");
+        const tagRes = await axios.get(`${API}/tags`);
         setTags(tagRes.data);
       } catch (err) {
         console.error("Failed fetching tags:", err);
@@ -97,7 +96,7 @@ export default function SinglePost() {
       data.append("name", filename);
       data.append("file", file);
       try {
-        await axios.post("/api/upload", data);
+        await axios.post(`${API}/upload`, data);
         updatedPost.photo = filename;
       } catch (err) {
         console.error("Image upload failed:", err);
@@ -106,7 +105,7 @@ export default function SinglePost() {
     }
 
     try {
-      await axios.put(`/api/posts/${post._id}`, updatedPost);
+      await axios.put(`${API}/posts/${post._id}`, updatedPost);
       setPost(updatedPost);
       setUpdateMode(false);
       alert("Post updated successfully.");
@@ -124,7 +123,7 @@ export default function SinglePost() {
     if (!confirmDelete) return;
     try {
       const res = await axios.delete(
-        `/api/posts/${post._id}?userId=${user._id}`
+        `${API}/posts/${post._id}?userId=${user._id}`
       );
 
       if (res.status === 200) {

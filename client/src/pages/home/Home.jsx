@@ -7,6 +7,7 @@ import { useLocation } from "react-router";
 import { Context } from "../../context/Context";
 import "./Home.css";
 import ExploreCategories from "../../components/exploreCategories/ExploreCategories";
+import { API } from "../../config";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -18,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`/api/posts${search}`);
+        const res = await axios.get(`${API}/posts${search}`);
         setPosts(res.data);
       } catch (err) {
         console.error("Error fetching posts:", err);
@@ -39,7 +40,7 @@ export default function Home() {
         {isLoggedIn && <IntroSection />}
         <div className="postsWrapper">
           <h1>Latest Posts</h1>
-            <Posts posts={posts} loading={loading} />
+          <Posts posts={posts} loading={loading} />
         </div>
       </div>
     </>

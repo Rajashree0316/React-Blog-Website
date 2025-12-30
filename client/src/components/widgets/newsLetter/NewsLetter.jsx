@@ -1,6 +1,7 @@
 // components/Newsletter.jsx
 import React, { useState } from "react";
 import "./Newsletter.css";
+import { API } from "../../../config";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ export default function Newsletter() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/newsletter", {
+      const res = await fetch(`${API}/newsletter`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
 body: JSON.stringify({ email: email.trim().toLowerCase() }),

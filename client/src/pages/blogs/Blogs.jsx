@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { API } from "../../config";
 import Post from "../../components/allPosts/post/Post";
 import FeaturedPost from "../../components/allPosts/featuredPost/FeaturedPost";
 import "./Blogs.css";
@@ -45,7 +46,7 @@ export default function Blogs() {
   // Fetch Featured Post
   const fetchFeaturedPost = async () => {
     try {
-      const res = await fetch("/api/posts/featured");
+      const res = await fetch(`${API}/posts/featured`);
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0) {
@@ -70,7 +71,7 @@ export default function Blogs() {
     setError(null);
     try {
       const response = await fetch(
-        `/api/posts?sort=${sortType}&time=${timeRange}${
+        `${API}/posts?sort=${sortType}&time=${timeRange}${
           tag ? `&tag=${encodeURIComponent(tag)}` : ""
         }`
       );
@@ -179,43 +180,45 @@ export default function Blogs() {
             )}
             {featuredPost && <FeaturedPost post={featuredPost} layout="row" />}
           </div>
-        
-         <div className="other-posts-container">
-          <h2 className="all-posts-heading">🚀 Explore the Latest Insights</h2>
-          <SortFilterBar
-            sortType={sortType}
-            setSortType={setSortType}
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
-          />
 
-          <div className="blogs-list">
-            {currentPosts.map((post, index) => (
-              <div
-                key={post._id}
-                className="blog-card-wrapper"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <Post
-                  post={post}
-                  index={index}
-                  isHighlighted={
-                    index === 0 && !!highlightId && currentPage === 1
-                  }
-                  isShareOpen={openSharePostId === post._id}
-                  onOpenShare={() => handleOpenShare(post._id)}
-                  onCloseShare={handleCloseShare}
-                />
-              </div>
-            ))}
+          <div className="other-posts-container">
+            <h2 className="all-posts-heading">
+              🚀 Explore the Latest Insights
+            </h2>
+            <SortFilterBar
+              sortType={sortType}
+              setSortType={setSortType}
+              timeRange={timeRange}
+              setTimeRange={setTimeRange}
+            />
+
+            <div className="blogs-list">
+              {currentPosts.map((post, index) => (
+                <div
+                  key={post._id}
+                  className="blog-card-wrapper"
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  <Post
+                    post={post}
+                    index={index}
+                    isHighlighted={
+                      index === 0 && !!highlightId && currentPage === 1
+                    }
+                    isShareOpen={openSharePostId === post._id}
+                    onOpenShare={() => handleOpenShare(post._id)}
+                    onCloseShare={handleCloseShare}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={paginate}
+            />
           </div>
-
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={paginate}
-          />
-        </div>
         </div>
 
         <BlogSidebar />

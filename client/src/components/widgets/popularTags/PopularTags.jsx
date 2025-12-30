@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./PopularTags.css";
 import { Link } from "react-router-dom";
+import { API } from "../../../config";
 
 const PopularTags = () => {
   const [tags, setTags] = useState([]);
@@ -11,8 +12,7 @@ const PopularTags = () => {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const response = await fetch("/api/tags");
-        const data = await response.json();
+const response = await fetch(`${API}/tags`);        const data = await response.json();
         setTags(data);
       } catch (err) {
         setError("Failed to load tags");
