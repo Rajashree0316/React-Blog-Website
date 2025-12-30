@@ -1,6 +1,6 @@
 // components/Newsletter.jsx
 import React, { useState } from "react";
-import "./Newsletter.css";
+import "./NewsLetter.css";
 import { API } from "../../../config";
 
 export default function Newsletter() {
