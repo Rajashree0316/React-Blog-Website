@@ -35,14 +35,20 @@ mongoose
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: [
+    "http://localhost:5173",
+    "https://blogspace-reactweb.netlify.app",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use(cors(corsOptions));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
 
 // File upload
 const storage = multer.diskStorage({
@@ -72,5 +78,6 @@ app.use("/api/newsletter", newsletterRoute);
 app.use("/api/security", securityRoute); // ✅ Different path
 app.use("/api/preferences", preferencesRoute);
 
-// Start server
-app.listen(5000, () => console.log("Backend is running on port 5000"));
+// Start server on dynamic port (Render requirement)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Backend is running on port ${PORT}`));
