@@ -20,14 +20,13 @@ export default function SinglePost() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [authorProfile, setAuthorProfile] = useState({});
-
   const [authorName, setAuthorName] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [tags, setTags] = useState([]);
-
   const editorRef = useRef(null);
 
+  // Fetch post and tags
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -38,17 +37,19 @@ export default function SinglePost() {
         setDesc(p.desc);
         setAuthorName(p.username);
         setSelectedTags(p.tags || []);
+
+        // Fetch author profile
         if (p?.userId) {
           try {
-            const res = await axios.get(`${API}/users/${p.userId}`);
-            setAuthorProfile(res.data);
+            const userRes = await axios.get(`${API}/users/${p.userId}`);
+            setAuthorProfile(userRes.data);
           } catch (err) {
             console.error("Error fetching author profile:", err);
           }
         } else if (p?.username) {
           try {
-            const res = await axios.get(`${API}/users?username=${p.username}`);
-            setAuthorProfile(res.data);
+            const userRes = await axios.get(`${API}/users?username=${p.username}`);
+            setAuthorProfile(userRes.data);
           } catch (err) {
             console.error("Error fetching author by username:", err);
           }
@@ -69,26 +70,21 @@ export default function SinglePost() {
 
     fetchPost();
     fetchTags();
-  }, [path, user]);
+  }, [path]);
 
+  // Update input value when editing tags
   useEffect(() => {
     if (updateMode && selectedTags.length > 0) {
       setInputValue(selectedTags.map((tag) => `#${tag}`).join(", "));
     }
   }, [updateMode, selectedTags]);
 
+  // Update post
   const handleUpdate = async () => {
     const trimmedTitle = title.trim();
-    if (trimmedTitle.length < 5) {
-      return alert("Title must be at least 5 characters.");
-    }
+    if (trimmedTitle.length < 5) return alert("Title must be at least 5 characters.");
 
-    const updatedPost = {
-      ...post,
-      title: trimmedTitle,
-      desc,
-      tags: selectedTags,
-    };
+    const updatedPost = { ...post, title: trimmedTitle, desc, tags: selectedTags };
 
     if (file) {
       const data = new FormData();
@@ -100,7 +96,7 @@ export default function SinglePost() {
         updatedPost.photo = filename;
       } catch (err) {
         console.error("Image upload failed:", err);
-        return;
+        return alert("Image upload failed.");
       }
     }
 
@@ -115,20 +111,15 @@ export default function SinglePost() {
     }
   };
 
+  // Delete post
   const handleDelete = async () => {
     if (!user) return alert("You must be logged in to delete a post.");
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
-    if (!confirmDelete) return;
-    try {
-      const res = await axios.delete(
-        `${API}/posts/${post._id}?userId=${user._id}`
-      );
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
 
+    try {
+      const res = await axios.delete(`${API}/posts/${post._id}?userId=${user._id}`);
       if (res.status === 200) {
         alert("Post deleted.");
-        setPost(null);
         navigate("/blogs");
       }
     } catch (err) {
@@ -137,6 +128,7 @@ export default function SinglePost() {
     }
   };
 
+  // Navigate on tag click
   const handleTagClick = (tag) => {
     navigate(`/posts?tag=${encodeURIComponent(tag)}`);
   };
@@ -150,27 +142,13 @@ export default function SinglePost() {
             src={PF + post.photo}
             alt="Post"
             className="singlePostImg"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/default-placeholder.jpg";
-            }}
+            onError={(e) => (e.target.src = "/default-placeholder.jpg")}
           />
         )}
         {updateMode && (
           <div className="fileInputContainer">
-            {post.photo && (
-              <img
-                src={PF + post.photo}
-                alt="Current"
-                className="singlePostImg"
-              />
-            )}
-            <input
-              type="file"
-              id="fileInput"
-              style={{ display: "none" }}
-              onChange={(e) => setFile(e.target.files[0])}
-            />
+            {post.photo && <img src={PF + post.photo} alt="Current" className="singlePostImg" />}
+            <input type="file" id="fileInput" style={{ display: "none" }} onChange={(e) => setFile(e.target.files[0])} />
             <label htmlFor="fileInput" className="fileInputLabel">
               Choose new image
             </label>
@@ -180,29 +158,18 @@ export default function SinglePost() {
         {/* Author Info */}
         <div
           className="authorInfo"
-          onClick={() =>
-            navigate(`/profile/${authorProfile?._id || post.userId}`)
-          }
+          onClick={() => navigate(`/profile/${authorProfile?._id || post.userId}`)}
           style={{ cursor: "pointer" }}
         >
           <img
             loading="lazy"
-            src={
-              authorProfile?.profilePic
-                ? PF + authorProfile.profilePic
-                : "/default-placeholder.jpg"
-            }
+            src={authorProfile?.profilePic ? PF + authorProfile.profilePic : "/default-placeholder.jpg"}
             alt="Author"
             className="avatar"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/default-placeholder.jpg";
-            }}
+            onError={(e) => (e.target.src = "/default-placeholder.jpg")}
           />
           <div className="authorDetails">
-            <span className="authorName">
-              {authorProfile?.username || post?.username || "Unknown Author"}
-            </span>
+            <span className="authorName">{authorProfile?.username || post?.username || "Unknown Author"}</span>
             <div className="authorDate">
               {post.createdAt && (
                 <span className="postDate">
@@ -231,15 +198,8 @@ export default function SinglePost() {
             {title}
             {post.username === user?.username && (
               <div className="singlePostEdit">
-                <i
-                  className="singlePostIcon"
-                  onClick={() => setUpdateMode(true)}
-                >
-                  <FaEdit className="singlePostIcon-edit" />
-                </i>
-                <i className="singlePostIcon" onClick={handleDelete}>
-                  <RiDeleteBin6Fill className="singlePostIcon-delete" />
-                </i>
+                <FaEdit className="singlePostIcon-edit" onClick={() => setUpdateMode(true)} />
+                <RiDeleteBin6Fill className="singlePostIcon-delete" onClick={handleDelete} />
               </div>
             )}
           </h1>
@@ -258,34 +218,22 @@ export default function SinglePost() {
                 onKeyDown={(e) => {
                   if (["Enter", " ", ","].includes(e.key)) {
                     e.preventDefault();
-                    const newTag = inputValue
-                      .trim()
-                      .replace(/^#/, "")
-                      .toLowerCase();
-                    if (newTag && !selectedTags.includes(newTag)) {
-                      setSelectedTags([...selectedTags, newTag]);
-                    }
+                    const newTag = inputValue.trim().replace(/^#/, "").toLowerCase();
+                    if (newTag && !selectedTags.includes(newTag)) setSelectedTags([...selectedTags, newTag]);
                     setInputValue("");
                   }
                 }}
                 onBlur={() => {
                   const rawInput = inputValue.trim();
-                  let parsedTags = rawInput
-                    .split(/[, \s#]+/)
-                    .filter((tag) => tag.length > 0);
-                  parsedTags = Array.from(
-                    new Set(parsedTags.map((tag) => tag.toLowerCase()))
+                  const parsedTags = Array.from(
+                    new Set(rawInput.split(/[, \s#]+/).filter((tag) => tag.length > 0).map((tag) => tag.toLowerCase()))
                   );
                   setSelectedTags(parsedTags);
                 }}
               />
             ) : selectedTags.length > 0 ? (
               selectedTags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="tagItem"
-                  onClick={() => handleTagClick(tag)}
-                >
+                <span key={index} className="tagItem" onClick={() => handleTagClick(tag)}>
                   #{tag}
                 </span>
               ))
@@ -299,47 +247,26 @@ export default function SinglePost() {
         <div className="singlePostDescWrapper">
           {updateMode ? (
             <Editor
-              apiKey="yc19r2zg6r8jwyd2oe6329mmu7bakft8oask65g7dvbhmcgg"
+              apiKey="dnfe6xhdx2dzx3a0hkxlgmxsr3704c030h6176x2oyanhmkl"
               value={desc}
               init={{
                 height: 700,
                 menubar: true,
                 plugins: [
-                  "advlist",
-                  "autolink",
-                  "lists",
-                  "link",
-                  "image",
-                  "charmap",
-                  "preview",
-                  "anchor",
-                  "searchreplace",
-                  "visualblocks",
-                  "code",
-                  "fullscreen",
-                  "insertdatetime",
-                  "media",
-                  "table",
-                  "codesample",
-                  "help",
-                  "wordcount",
+                  "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
+                  "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
+                  "insertdatetime", "media", "table", "codesample", "help", "wordcount",
                 ],
                 toolbar:
                   "undo redo | blocks | fontfamily fontsize | bold italic underline strikethrough forecolor backcolor | " +
                   "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | " +
                   "link image media table codesample | removeformat | help fullscreen",
-                content_style:
-                  "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+                content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
               }}
               onEditorChange={(content) => setDesc(content)}
             />
           ) : (
-            <div
-              className="singlePostDesc"
-              dangerouslySetInnerHTML={{
-                __html: desc.replace(/<hr\s*\/?>/g, ""),
-              }}
-            />
+            <div className="singlePostDesc" dangerouslySetInnerHTML={{ __html: desc.replace(/<hr\s*\/?>/g, "") }} />
           )}
         </div>
 

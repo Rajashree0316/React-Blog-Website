@@ -4,7 +4,7 @@ import ShareModal from "../../common/shareModal/ShareModal";
 import Spinner, { SpinnerTypes } from "../../common/commonSpinner/Spinner";
 import { Editor } from "@tinymce/tinymce-react";
 import { useCommentContext } from "../../../context/CommentContext";
-import { PF} from "../../../config";
+import { PF } from "../../../config";
 
 // Count all nested replies recursively
 const countNestedReplies = (replies) =>
@@ -108,15 +108,13 @@ export default function CommentSection({ postId, currentUser, onCommentAdded, on
             <CommentItem
               key={`comment-${comment._id}`}
               comment={comment}
-              onVote={(id, action) => handleVote(id, action)}
+              onVote={handleVote}
               onShare={handleShare}
               onDelete={handleDeleteComment}
-              onReply={(id, text) => {
-                handleReply(id, text);
-                if (onCommentAdded) onCommentAdded(totalCommentCount + 1);
-              }}
+              onReply={handleReply}
               currentUser={currentUser}
               isLast={index === visibleComments.length - 1}
+              onCommentAdded={onCommentAdded}
             />
           ))}
         </ul>
@@ -167,13 +165,18 @@ function Avatar({ profilePic, username }) {
 // ==========================
 // Single Comment + Recursive Replies
 // ==========================
-function CommentItem({ comment, onVote, onShare, onDelete, onReply, currentUser, isLast = false }) {
+function CommentItem({ comment, onVote, onShare, onDelete, onReply, currentUser, isLast = false, onCommentAdded }) {
   const [showReplies, setShowReplies] = useState(false);
   const [replyOpen, setReplyOpen] = useState(false);
 
-  // ✅ Fix: compare safely whether userId is string or object
   const isLoggedInAuthor =
     currentUser?._id === comment.userId?._id || currentUser?._id === comment.userId;
+
+  const handleReplySubmit = (text) => {
+    onReply(comment._id, text);
+    setReplyOpen(false);
+    if (onCommentAdded) onCommentAdded();
+  };
 
   return (
     <li id={`comment-${comment._id}`} className={`commentItem ${isLast ? "lastCommentItem" : ""}`}>
@@ -182,13 +185,10 @@ function CommentItem({ comment, onVote, onShare, onDelete, onReply, currentUser,
       </div>
       <div className="commentContent">
         <p className="author">{comment.username}</p>
-
         <div className="commentText" dangerouslySetInnerHTML={{ __html: comment.text }} />
-
         <div className="commentMeta">
           <span>{comment.time ? new Date(comment.time).toLocaleString() : "Just now"}</span>
         </div>
-
         <div className="commentActions">
           {currentUser && (
             <>
@@ -212,11 +212,35 @@ function CommentItem({ comment, onVote, onShare, onDelete, onReply, currentUser,
             </button>
           )}
         </div>
+
+        {/* Reply Form */}
+        {replyOpen && <ReplyForm onSubmit={handleReplySubmit} />}
+
+        {/* Nested Replies */}
+        {comment.replies && comment.replies.length > 0 && (
+          <div className="nestedReplies">
+            <button onClick={() => setShowReplies(!showReplies)} className="showRepliesBtn">
+              {showReplies ? "Hide Replies" : `View Replies (${countNestedReplies(comment.replies)})`}
+            </button>
+            {showReplies &&
+              comment.replies.map((reply) => (
+                <CommentItem
+                  key={`comment-${reply._id}`}
+                  comment={reply}
+                  onVote={onVote}
+                  onShare={onShare}
+                  onDelete={onDelete}
+                  onReply={onReply}
+                  currentUser={currentUser}
+                  onCommentAdded={onCommentAdded}
+                />
+              ))}
+          </div>
+        )}
       </div>
     </li>
   );
 }
-
 
 // ==========================
 // Reply input form
@@ -240,7 +264,7 @@ function ReplyForm({ onSubmit }) {
   return (
     <form className="replyForm" onSubmit={handleSubmit}>
       <Editor
-        apiKey="yc19r2zg6r8jwyd2oe6329mmu7bakft8oask65g7dvbhmcgg"
+        apiKey="dnfe6xhdx2dzx3a0hkxlgmxsr3704c030h6176x2oyanhmkl"
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue=""
         init={{

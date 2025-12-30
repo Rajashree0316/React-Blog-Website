@@ -8,6 +8,10 @@ import "./Write.css";
 
 export default function Write() {
   const { user } = useContext(Context);
+  const navigate = useNavigate();
+  const editorRef = useRef(null);
+  const titleRef = useRef();
+
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState(user?.username.toUpperCase() || "");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -20,10 +24,6 @@ export default function Write() {
   const [tagsError, setTagsError] = useState("");
   const [fileError, setFileError] = useState("");
 
-  const editorRef = useRef(null);
-  const navigate = useNavigate();
-  const titleRef = useRef();
-
   useEffect(() => {
     titleRef.current?.focus();
   }, []);
@@ -34,6 +34,7 @@ export default function Write() {
     let hasError = false;
     const trimmedTitle = title.trim();
 
+    // Validate title
     if (trimmedTitle.length < 5) {
       setTitleError("Title must be at least 5 characters.");
       hasError = true;
@@ -41,6 +42,7 @@ export default function Write() {
       setTitleError("");
     }
 
+    // Validate tags
     if (selectedTags.length === 0) {
       setTagsError("Please add at least one tag.");
       hasError = true;
@@ -48,6 +50,7 @@ export default function Write() {
       setTagsError("");
     }
 
+    // Validate file
     if (!file) {
       setFileError("Please upload a cover image.");
       hasError = true;
@@ -73,6 +76,7 @@ export default function Write() {
       featured: isFeatured,
     };
 
+    // Upload image
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
@@ -90,16 +94,15 @@ export default function Write() {
     }
 
     setIsLoading(true);
-
     try {
       const res = await axios.post(`${API}/posts`, newPost);
       navigate(`/post/${res.data._id}`);
     } catch (err) {
       console.error("Post creation failed:", err);
       alert("Could not publish the post. Please check your inputs.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -112,6 +115,7 @@ export default function Write() {
       <div className="writeWrapperContainer">
         <div className="writeWrapper">
           <form className="writeForm" onSubmit={handleSubmit}>
+            {/* File Upload */}
             <div className="writeFormGroup">
               <label htmlFor="fileInput" className="iconLabel">
                 <i className="fas fa-cloud-upload-alt"></i> Upload Image*
@@ -131,14 +135,11 @@ export default function Write() {
 
             {file && (
               <div className="writeImgPreview">
-                <img
-                  className="writeImg"
-                  src={URL.createObjectURL(file)}
-                  alt="Preview"
-                />
+                <img className="writeImg" src={URL.createObjectURL(file)} alt="Preview" />
               </div>
             )}
 
+            {/* Title */}
             <div className="writeFormGroup">
               <label htmlFor="titleInput">Post Title*</label>
               <input
@@ -156,6 +157,7 @@ export default function Write() {
               {titleError && <p className="errorText">{titleError}</p>}
             </div>
 
+            {/* Author */}
             <div className="writeFormGroup">
               <label htmlFor="authorInput">Author</label>
               <input
@@ -164,11 +166,11 @@ export default function Write() {
                 placeholder="Author"
                 className="writeInput"
                 value={author}
-                onChange={(e) => setAuthor(e.target.value.toUpperCase())}
                 readOnly
               />
             </div>
 
+            {/* Tags */}
             <div className="writeFormGroup">
               <label htmlFor="tagsInput">Tags*</label>
               <input
@@ -188,6 +190,7 @@ export default function Write() {
               {tagsError && <p className="errorText">{tagsError}</p>}
             </div>
 
+            {/* Featured */}
             <div className="checkboxContainer">
               <label className="checkboxLabel">
                 <input
@@ -199,36 +202,18 @@ export default function Write() {
               </label>
             </div>
 
+            {/* TinyMCE Editor */}
             <Editor
-              apiKey="yc19r2zg6r8jwyd2oe6329mmu7bakft8oask65g7dvbhmcgg"
+              apiKey="dnfe6xhdx2dzx3a0hkxlgmxsr3704c030h6176x2oyanhmkl"
               onInit={(evt, editor) => (editorRef.current = editor)}
               init={{
                 height: 600,
                 menubar: true,
                 plugins: [
-                  "advlist",
-                  "autolink",
-                  "lists",
-                  "link",
-                  "image",
-                  "charmap",
-                  "preview",
-                  "anchor",
-                  "searchreplace",
-                  "visualblocks",
-                  "code",
-                  "fullscreen",
-                  "insertdatetime",
-                  "media",
-                  "table",
-                  "help",
-                  "wordcount",
-                  "emoticons",
-                  "codesample",
-                  "autosave",
-                  "quickbars",
-                  "pagebreak",
-                  "nonbreaking",
+                  "advlist", "autolink", "lists", "link", "image", "charmap", "preview",
+                  "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
+                  "insertdatetime", "media", "table", "help", "wordcount", "emoticons",
+                  "codesample", "autosave", "quickbars", "pagebreak", "nonbreaking",
                   "directionality",
                 ],
                 toolbar:

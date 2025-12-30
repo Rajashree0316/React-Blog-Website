@@ -30,9 +30,13 @@ import { Context } from "./context/Context";
 function App() {
   const { user, dispatch } = useContext(Context);
 
+  // ✅ Log environment variables to check production vs development
+  console.log("API URL:", import.meta.env.VITE_API_URL);
+  console.log("Image URL:", import.meta.env.VITE_IMAGE_URL);
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
+  
 
   return (
     <div className="appLayout">
