@@ -5,7 +5,7 @@ import "./RecentPosts.css";
 
 export default function RecentPosts() {
   const [recentPosts, setRecentPosts] = useState([]);
-const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+const PF = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     const fetchRecentPosts = async () => {

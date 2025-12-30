@@ -13,7 +13,7 @@ import FeaturedUserCard from "../../components/widgets/featuredUserCard/Featured
 export default function Single({ postId, currentUser }) {
   const location = useLocation();
   const commentSectionRef = useRef(null);
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
 
   const [post, setPost] = useState(null);
   const [trendingPosts, setTrendingPosts] = useState([]);

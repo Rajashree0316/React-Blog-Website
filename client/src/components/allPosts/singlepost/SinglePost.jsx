@@ -25,7 +25,7 @@ export default function SinglePost() {
   const [inputValue, setInputValue] = useState("");
   const [tags, setTags] = useState([]);
 
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
 
   const editorRef = useRef(null);
 

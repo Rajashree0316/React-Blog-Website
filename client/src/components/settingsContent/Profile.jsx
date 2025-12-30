@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 export default function Profile() {
   const { user, dispatch } = useContext(Context);
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
 
   const [file, setFile] = useState(null);
   const [fields, setFields] = useState({

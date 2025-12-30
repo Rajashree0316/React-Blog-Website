@@ -5,7 +5,7 @@ import Spinner, { SpinnerTypes } from "../../common/commonSpinner/Spinner";
 import { Editor } from "@tinymce/tinymce-react";
 import { useCommentContext } from "../../../context/CommentContext";
 
-const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+const PF = import.meta.env.VITE_IMAGE_URL;
 
 // Count all nested replies recursively
 const countNestedReplies = (replies) =>

@@ -26,7 +26,7 @@ export default function Post({
   hideImageWrapper = false,
   compact = false,
 }) {
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
   const navigate = useNavigate();
 
   const [authorPic, setAuthorPic] = useState(null);

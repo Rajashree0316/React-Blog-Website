@@ -7,7 +7,7 @@ export default function FeaturedPost({
   layout = "row",
   showLabel = true,
 }) {
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
 
   const imgSrc =
     post.photo && post.photo.trim() !== ""

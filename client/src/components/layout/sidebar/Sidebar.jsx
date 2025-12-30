@@ -7,7 +7,7 @@ import "./Sidebar.css";
 export default function Sidebar() {
   const [cats, setCats] = useState([]);
   const { user } = useContext(Context);
-const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+const PF = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     const getCats = async () => {

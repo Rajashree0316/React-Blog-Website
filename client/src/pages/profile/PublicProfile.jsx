@@ -43,7 +43,7 @@ const PublicProfile = () => {
   const isOwnProfile = currentUser?._id === id;
   const isPublicProfile = viewedPreferences?.publicProfile;
   const showFullProfile = isOwnProfile || isPublicProfile;
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
 
   // ✅ Fetch preferences
   useEffect(() => {

@@ -9,7 +9,7 @@ import FollowButton from "../../common/followButton/FollowButton";
 const FeaturedUserCard = ({ username }) => {
   const [user, setUser] = useState(null);
   const { user: currentUser } = useContext(Context);
-  const PF = import.meta.env.IMAGE_BASE_URL || "http://localhost:5000/images/";
+  const PF = import.meta.env.VITE_IMAGE_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
