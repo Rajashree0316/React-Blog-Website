@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API } from "../../config";
 import axios from "axios";
-import "./FeaturedPostsPage.css";
+import "./featuredPostsPage.css";
 import Post from "../../components/allPosts/post/Post";
 
 export default function FeaturedPostsPage() {
