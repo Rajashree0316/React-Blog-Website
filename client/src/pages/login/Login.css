@@ -1,0 +1,153 @@
+/* === 1. Container === */
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+/* === 2. Login Card === */
+.login {
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 10px;
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  width: 100%;
+  max-width: 450px;
+  margin: 2.6rem 0 4rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* === 3. Title === */
+.loginTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* === 4. Alert / Error Card === */
+.alertCard {
+  background: #ffe6e6;
+  border: 1px solid #ff4d4f;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  color: #c0392b;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* === 5. Form === */
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* === 6. Inputs === */
+.loginInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.loginInput:focus {
+  border-color: teal;
+}
+
+/* === 7. Button === */
+.loginButton {
+  padding: 0.8rem;
+  margin-top: 10px;
+  background: #3498db;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.loginButton:hover {
+  background: #2980b9;
+}
+
+.loginButton:disabled {
+  background-color: rgb(252, 173, 173);
+  cursor: not-allowed;
+}
+
+/* === 8. Links === */
+.loginLinks {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.forgotLink,
+.noUnderline {
+  text-decoration: none !important;
+  color: #010101;
+  font-weight: 600;
+}
+
+.forgotLink {
+  color:rgb(17, 0, 128);
+  text-decoration: underline !important;
+}
+
+.noUnderline span {
+  color: rgb(17, 0, 128) !important;
+  font-weight: bold;
+  text-decoration: underline !important;
+
+}
+
+/* === 9. Animations === */
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

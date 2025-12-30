@@ -1,0 +1,17 @@
+.activity-feed {
+  display: flex;
+  flex-direction: column;
+  margin: 0rem 0rem 1rem;
+}
+
+.feed-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .activity-feed {
+    padding: 0;
+  }
+}

@@ -1,0 +1,165 @@
+/* === Hero Section === */
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  color: #0a0a0a;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* === Glass Card === */
+.hero-content {
+  max-width: 800px;
+  padding: 2.5rem;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hero-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(148, 107, 219, 0.45);
+}
+
+/* === Headings === */
+.hero h1 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(100, 108, 255, 0.6);
+}
+
+/* === Animated Tagline === */
+.tagline {
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgb(83, 2, 78);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px rgba(230, 230, 255, 0.7);
+}
+
+.tagline span {
+  opacity: 0;
+  animation: swingDropLoop 3s ease-out infinite;
+}
+
+@keyframes swingDropLoop {
+  0% { transform: translateY(-40px) rotateZ(10deg); opacity: 0; }
+  20% { opacity: 1; transform: translateY(10px) rotateZ(-10deg); }
+  40% { transform: translateY(-5px) rotateZ(5deg); }
+  60% { transform: translateY(0px) rotateZ(0deg); }
+  100% { opacity: 0; transform: translateY(-40px) rotateZ(10deg); }
+}
+
+/* === Paragraph === */
+.hero p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #f8f8f8;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* === Buttons === */
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.hero-buttons button {
+  min-width: 150px;
+  font-size: 1rem;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Primary Button — Blue-Purple Gradient */
+.hero-buttons button:first-child {
+  background: linear-gradient(135deg, #5b21b6, #3b82f6, #7c3aed);
+}
+
+.hero-buttons button:first-child:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(91, 33, 182, 0.7);
+}
+
+/* Secondary Button — Gold-Orange Glow */
+.hero-buttons .secondary {
+  background: linear-gradient(135deg, #fbbf24, #f97316, #f59e0b);
+}
+
+.hero-buttons .secondary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 1rem;
+  }
+
+  .hero-content {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-buttons button {
+    width: 100%;
+  }
+}

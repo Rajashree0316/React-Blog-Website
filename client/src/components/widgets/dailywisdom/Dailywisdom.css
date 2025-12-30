@@ -1,0 +1,27 @@
+
+
+.quote-card {
+  background: #e8f1ff;
+  padding: 1rem;
+  border-left: 5px solid #3b82f6;
+  border-radius: 10px;
+  margin-top: 0.9rem;
+  text-align: center;
+}
+
+.emoji {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.quote-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.quote-author {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #475569;
+}

@@ -1,0 +1,313 @@
+/* -------------------------- Base Styling -------------------------- */
+.securityForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.securityForm label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.securityForm input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.securityForm input:focus {
+  border-color: #007bff;
+}
+
+/* Error message animation */
+.commonErrorMsg {
+  color: #dc3545;
+  font-size: 13px;
+  animation: shakeFade 0.5s ease;
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+.greenBtn,
+.blueBtn,
+.redBtn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.greenBtn {
+  background-color: #28a745;
+  color: white;
+  margin-top: 0.72rem;
+}
+
+.greenBtn:hover {
+  background-color: #218838;
+}
+
+.blueBtn {
+  background-color: #007bff;
+  color: white;
+}
+
+.blueBtn:hover {
+  background-color: #0056b3;
+}
+
+.redBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.redBtn:hover {
+  background-color: #c82333;
+}
+
+/* -------------------------- Security Cards -------------------------- */
+.securityCard {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: #fafafa;
+  transition: box-shadow 0.3s ease;
+}
+
+.securityCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.securityCard h3 {
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.securityCard p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Collapsible containers (default visible on desktop) */
+.collapsible-content {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+
+.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  pointer-events: none;
+}
+
+.expanded {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+/* Toggle button */
+.toggleBtn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+/* -------------------------- Two-Factor Section -------------------------- */
+.twoFABox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.twoFABoxSub {
+  display: flex;
+  align-items: center;
+}
+
+.lockIcon {
+  font-size: 22px;
+  padding-right: 0.5rem;
+}
+
+.qrSection {
+  margin-top: 1rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.qrCodeImg {
+  max-width: 200px;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+/* -------------------------- Session Management -------------------------- */
+.sessionItem {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sessionItem:hover {
+  background-color: #f9f9f9;
+  transform: scale(1.01);
+}
+
+.sessionItem strong {
+  font-size: 15px;
+}
+
+.sessionItem p,
+.sessionItem small {
+  font-size: 13px;
+  color: #666;
+}
+
+.activeTag {
+  color: green;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* -------------------------- Media Queries -------------------------- */
+@media (min-width: 600px) {
+  .twoFABox {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sessionItem {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .toggleBtn {
+    display: none; /* hide toggle on larger screens */
+  }
+
+  .collapsible-content {
+    max-height: none !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .securityCard {
+    margin-top: 1rem;
+    padding: 1rem;
+    animation: slideInUp 0.4s ease;
+  }
+
+  .securityCard h3 {
+    font-size: 16px;
+  }
+
+  .securityCard p {
+    font-size: 13px;
+  }
+
+  .sessionItem {
+    padding: 0.8rem;
+    animation: fadeInScale 0.4s ease;
+  }
+
+  .sessionItem strong {
+    font-size: 13px;
+  }
+
+  .sessionItem p,
+  .sessionItem small {
+    font-size: 11px;
+  }
+
+  .activeTag {
+    font-size: 11px;
+  }
+
+  .greenBtn,
+  .blueBtn,
+  .redBtn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* -------------------------- Animations -------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shakeFade {
+  0% {
+    transform: translateX(0px);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}

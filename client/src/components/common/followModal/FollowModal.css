@@ -1,0 +1,131 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 420px;
+  max-height: 80vh;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: slideFadeIn 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.2s ease;
+}
+.modal-close-btn:hover {
+  color: #e74c3c;
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.follow-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex-grow: 1;
+  scroll-behavior: smooth;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.user-item:hover {
+  background-color: #f9f9f9;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  border: 2px solid #eee;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.username {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.95rem;
+}
+.username.clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.username.clickable:hover {
+  color: #007bff;
+}
+
+.no-users {
+  text-align: center;
+  color: #777;
+  padding: 30px 0;
+  font-size: 0.95rem;
+}
+
+.loading {
+  padding: 1rem;
+  text-align: center;
+  font-style: italic;
+}
+
+.follow-list::-webkit-scrollbar {
+  width: 6px;
+}
+.follow-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+.follow-list::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}

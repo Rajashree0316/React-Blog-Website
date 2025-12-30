@@ -1,0 +1,72 @@
+.featured-posts-page {
+  padding: 2rem 1rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* ✨ Creative Glow Heading ✨ */
+.featured-heading {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #fff;
+  padding: 1rem 0;
+  margin-bottom: 2.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  animation: glow 3s infinite ease-in-out;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 12px rgba(255, 255, 255, 0.2); }
+  50% { box-shadow: 0 0 24px rgba(255, 255, 255, 0.45); }
+  100% { box-shadow: 0 0 12px rgba(255, 255, 255, 0.2); }
+}
+
+/* 🔥 Grid Layout */
+.featured-posts-grid {
+  display: grid;
+  gap: 1.8rem;
+  justify-content: center;
+}
+
+/* If 1 post → center */
+.featured-posts-grid.single {
+  grid-template-columns: 1fr;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* If 2 posts → center both */
+.featured-posts-grid.double {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* If ≥3 posts → 3 per row */
+.featured-posts-grid:not(.single):not(.double) {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.loading-message,
+.no-posts-message {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #fff;
+  margin-top: 2rem;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .featured-heading {
+    font-size: 1.9rem;
+  }
+
+  .featured-posts-grid.double {
+    grid-template-columns: 1fr;
+  }
+}

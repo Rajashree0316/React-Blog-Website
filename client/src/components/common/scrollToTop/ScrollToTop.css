@@ -1,0 +1,85 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+  opacity: 0.9;
+  animation: fadeInUp 0.4s ease-in-out;
+  /* Add relative positioning so tooltip positions relative to this */
+  position: fixed; /* already fixed */
+}
+
+/* Tooltip container needs relative parent to position absolutely */
+.scroll-to-top {
+  position: fixed;
+  /* keep fixed for the button */
+}
+
+.scroll-tooltip {
+  position: absolute;
+  bottom: 110%;
+  right: 50%;
+  transform: translateX(50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  /* Add a small shadow for readability */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  /* Make sure tooltip appears above other content */
+  z-index: 1100;
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-6px) scale(1.1);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #5b0eeb, #005bea);
+  opacity: 1;
+}
+
+.scroll-to-top:hover .scroll-tooltip {
+  opacity: 1;
+  transform: translateX(50%) translateY(-5px);
+}
+
+.scroll-to-top:active {
+  transform: scale(0.95);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scroll-to-top {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 20px;
+  }
+}

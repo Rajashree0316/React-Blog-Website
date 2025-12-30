@@ -1,0 +1,360 @@
+/* ─────────── Root Container ─────────── */
+.post {
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  min-height: 500px;
+  height: 100%;
+  transition: all 0.4s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.post.highlighted {
+  border-color: #007bff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.25);
+}
+
+.post.post--compact {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  min-height: auto;
+  padding: 0;
+  margin: 0;
+  transform: none;
+}
+
+.post:hover,
+.post:focus-within {
+  background: #f0f0f0;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.12);
+  border-color: #ccc;
+  filter: brightness(1.03);
+  z-index: 10;
+}
+
+/* ─────────── Card Layout ─────────── */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+/* ─────────── Image Section ─────────── */
+.postImgWrapper {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+  transition: transform 0.4s ease;
+}
+
+.postImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.post:hover .postImg {
+  transform: scale(1.06);
+}
+
+.featured-label-overlay {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  background-color: #ff9800;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* ─────────── Meta Top (Author / Share) ─────────── */
+.postMetaTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.authorDetails {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.authorName {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--primary-color, #007bff);
+  text-decoration: none;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.authorName:hover {
+  text-decoration: underline;
+}
+
+.dateReadTime {
+  display: flex;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 4px;
+  align-items: center;
+}
+
+.metaIcon {
+  margin-right: 4px;
+}
+
+.shareIcon {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease, transform 0.3s ease;
+}
+
+.shareIcon:hover {
+  color: #004aad;
+  transform: scale(1.1);
+  text-shadow: 0 0 6px rgba(0, 74, 173, 0.6);
+}
+
+/* ─────────── Content Section ─────────── */
+.postContent {
+  padding: 12px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.postTags {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.postTagInline {
+  background-color: #f44336;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  text-transform: capitalize;
+}
+
+.postTagInline:hover {
+  background-color: #d32f2f;
+  text-decoration: underline;
+}
+
+.postTitleLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.postTitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  color: #222;
+  line-height: 1.4;
+}
+
+.postTitleLink:hover .postTitle {
+  color: #0056cc;
+  text-decoration: underline;
+}
+
+.postDesc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #444;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.readMoreLink {
+  font-size: 0.9rem;
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.readMoreLink:hover {
+  text-decoration: underline;
+}
+
+/* ─────────── Meta Bottom (Reactions) ─────────── */
+.postMetaBottom {
+  border-top: 1px solid #e7e3e3;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+  background: white;
+  border-radius: 0 0 12px 12px;
+}
+
+.likes-comments {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.commonIcon {
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.commonIcon:hover {
+  transform: scale(1.15);
+}
+
+.likeIcon.active {
+  color: #e0245e;
+  text-shadow: 0 0 6px #efd4dd;
+}
+.commentIcon.active {
+  color: #1da1f2;
+  text-shadow: 0 0 6px #1da1f2;
+}
+
+.saveIcon.active {
+  color: #ffc107;
+  text-shadow: 0 0 6px #ffc107;
+}
+
+.viewIcon.active {
+  color: #17bf63;
+  text-shadow: 0 0 6px #17bf63;
+}
+
+/* ─────────── Animations ─────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.post {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* ─────────── Responsive ─────────── */
+@media (max-width: 768px) {
+  .post {
+    min-height: auto;
+  }
+
+  .postImgWrapper {
+    height: 180px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .postTitle {
+    font-size: 1.1rem;
+  }
+
+  .postDesc {
+    font-size: 0.85rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .likes-comments {
+    gap: 10px;
+  }
+
+  .commonIcon {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .post {
+    border-radius: 8px;
+    padding: 0;
+  }
+
+  .postImgWrapper {
+    height: 140px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .postTitle {
+    font-size: 1rem;
+  }
+
+  .postDesc {
+    font-size: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .postTagInline {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .commonIcon {
+    font-size: 0.9rem;
+  }
+
+  .featured-label-overlay {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    top: 8px;
+    right: 6px;
+  }
+}

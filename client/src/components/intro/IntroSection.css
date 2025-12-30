@@ -1,0 +1,203 @@
+/* ========== Main Content Layout ========== */
+.intro-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+/* ========== Left Section ========== */
+.intro-left {
+  flex: 1;
+  min-width: 300px;
+}
+
+.intro-left h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #1f2937; /* Dark heading from index.css */
+}
+
+.intro-left p {
+  margin-bottom: 1rem;
+  color: #191d23; 
+}
+
+/* Offer Grid */
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.offer-card {
+  background: #ffffff; /* Matches global cards */
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Matches .commonHeadings */
+  width: 100%;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.2); /* Same hover glow */
+}
+
+.offer-card h4 {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+/* Our Values Section */
+.our-values {
+  margin-top: 2rem;
+}
+
+.our-values h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+.value-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.value-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.2);
+}
+
+.value-card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  color: #1f2937;
+}
+
+.value-card p {
+  font-size: 1rem;
+  color: #4b5563;
+}
+
+/* ========== Right Section ========== */
+.intro-right {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Community Card */
+.community-card {
+  background: linear-gradient(
+    135deg,
+    #3654a5,   /* Your index.css blue */
+    #964ade    /* Purple from background gradient */
+  );
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.community-card h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.community-card p {
+  margin-bottom: 1rem;
+}
+
+/* ========== Buttons ========== */
+.btn {
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+/* PRIMARY BUTTON (Matches index.css blue hover tone) */
+.btn.primary {
+  background: #fff;
+  color: #3654a5;
+  border: 1px solid #3654a5;
+}
+
+.btn.primary:hover,
+.btn.primary:focus {
+  background: #e6eeff;
+  box-shadow: 0 0 0 3px rgba(54, 84, 165, 0.3);
+}
+
+/* SECONDARY (Ghost-white on gradient areas) */
+.btn.secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.btn.secondary:hover,
+.btn.secondary:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+/* ========== Responsive Styles ========== */
+@media (max-width: 768px) {
+  .intro-main {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+.intro-left h2 {
+  font-size: 1.4rem;
+}
+
+  .intro-left,
+  .intro-right {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .offer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card,
+  .community-card,
+  .value-card,
+  .offer-card {
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .profile-card .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+}

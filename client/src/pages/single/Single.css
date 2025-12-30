@@ -1,0 +1,192 @@
+/* --- Layout --- */
+.single-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.reaction-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 100vh;
+  padding-top: 80px;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 999;
+  transition: left 0.3s ease-in-out;
+}
+
+.single-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem 2rem 80px;
+  gap: 2rem;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.single-subContainer {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.single-posts {
+  flex: 1;
+}
+
+.single-comments {
+  margin-top: 2rem;
+}
+
+.singleSide-posts {
+  flex: 1;
+  min-width: 375px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px 0px 0px;
+}
+
+/* --- Post Cards --- */
+.singleSidePost-card-container {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+}
+
+.singleSidePost-card-container h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #bd1717;
+  padding-bottom: 8px;
+  color: #333;
+}
+
+.singleSidePost-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.8rem 0;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.singleSidePost-card img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.singleSidePost-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.singleSidePost-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+}
+
+.singleSidePost-date {
+  font-size: 12px;
+  color: #888;
+}
+
+.view-all-link {
+  display: block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: right;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsive Styles --- */
+@media screen and (max-width: 1024px) {
+  .reaction-sidebar {
+    flex-direction: row;
+    justify-content: space-around;
+    height: 60px;
+    width: 100%;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #333;
+    z-index: 1200;
+  }
+
+  .single-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .single-subContainer {
+    width: 100%;
+  }
+
+  .singleSide-posts {
+    width: 100%;
+    margin-top: 1.5rem;
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .singleSidePost-card img {
+    width: 60px;
+    height: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .singleSidePost-info {
+    max-width: 614px;
+    max-height: 48px;
+  }
+
+  .singleSidePost-info h3 {
+    font-size: 14px;
+  }
+
+  .singleSidePost-date {
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .singleSidePost-card img {
+    width: 60px;
+    height: 50px;
+  }
+
+  .singleSidePost-info h3 {
+    font-size: 13px;
+  }
+
+  .singleSidePost-date {
+    font-size: 10px;
+  }
+}

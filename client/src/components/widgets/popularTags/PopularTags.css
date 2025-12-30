@@ -1,0 +1,43 @@
+
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tag-badge {
+  background-color: #f1f5f9;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  color: #374151;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+.tag-badge:hover {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.loading {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.view-toggle {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #2563eb;
+  cursor: pointer;
+  text-align: right;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.view-toggle:hover {
+  color: #1d4ed8;
+}

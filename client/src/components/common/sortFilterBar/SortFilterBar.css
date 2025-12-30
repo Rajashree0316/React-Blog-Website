@@ -1,0 +1,49 @@
+/* ========= SORT & FILTER BAR ========= */
+.sort-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.sort-options,
+.time-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 1rem;
+}
+
+.sort-option,
+.time-option {
+  cursor: pointer;
+  opacity: 0.6;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.sort-option:hover,
+.time-option:hover {
+  opacity: 0.8;
+  color: #007bff;
+}
+
+.sort-option.active,
+.time-option.active {
+  font-weight: bold;
+  opacity: 1;
+  color: #007bff;
+}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 900px) {
+  .sort-options,
+  .time-options {
+    justify-content: center;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+  }
+}

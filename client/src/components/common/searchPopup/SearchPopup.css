@@ -1,0 +1,142 @@
+.search-popup {
+    position: absolute;
+    top: 0;
+    right: 6%;
+    width: 100%;
+    margin-top: 5rem;
+    max-width: 50vw;
+    background-color: #fff;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    animation: slideIn 0.3s ease forwards;
+    border-radius: 8px;
+    overflow-y: auto;
+    color: black;
+    transition: max-width 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg) scale(1.1);
+    color: crimson;
+}
+
+.search-popup-content {
+    padding: 1.3rem;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.search-popup-content h2 {
+    font-size: 21px;
+}
+
+.search-input-container {
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.search-input-container input {
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 999em;
+    min-width: 0;
+    transition: all 0.3s ease;
+}
+
+.search-input-container button {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    border-radius: 999em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-input-container button:hover {
+    background-color: #333;
+}
+
+.tags-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.tag:hover {
+    background-color: #ddd;
+}
+
+@media (max-width: 768px) {
+    .search-popup {
+        max-width: 70vw;
+        right: 5%;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .search-popup {
+        max-width: 95vw;
+        right: 2.5%;
+        margin-top: 4rem;
+    }
+
+    .search-input-container input,
+    .search-input-container button {
+        font-size: 0.95rem;
+        padding: 0.7rem;
+    }
+
+    .close-btn {
+        top: 0.8rem;
+        right: 1rem;
+        font-size: 1.8rem;
+    }
+
+    .search-popup-content h2 {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,115 @@
+/* === Reaction Sidebar Wrapper === */
+.reaction-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 100vh;
+  background: linear-gradient(58.2deg, rgba(30, 70, 180, 0.85) -3%, rgba(130, 40, 130, 0.6) 49.3%, rgba(180, 150, 80, 0.5) 97.7%);
+  padding: 80px 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 999;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* === Reaction Button Styles === */
+.reaction-button {
+  color: #ffffff;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50%;
+  padding: 10px;
+  position: relative;
+  transition: transform 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* === Reaction Count === */
+.reaction-button span {
+  font-size: 15px;
+  margin-top: 6px;
+  font-weight: bold;
+  color: #eee;
+}
+
+/* === Hover Effects === */
+.reaction-button:hover {
+  transform: scale(1.15);
+  color: #ff6b81;
+  box-shadow: 0 0 12px rgba(255, 107, 129, 0.4);
+}
+
+/* === Click Pulse Animation === */
+.reaction-button:active {
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* === Tooltip === */
+.reaction-button::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 130%;
+  background: #333;
+  color: #fff;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.reaction-button:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === Responsive - Tablets === */
+@media screen and (max-width: 1024px) {
+  .reaction-sidebar {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    height: 60px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    border-top: 1px solid #333;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* === Responsive - Mobile === */
+@media screen and (max-width: 768px) {
+  .reaction-button {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .reaction-button span {
+    display: block;
+    margin-left: 0;
+  }
+}

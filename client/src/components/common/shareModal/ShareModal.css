@@ -1,0 +1,89 @@
+.shareModalOverlay {
+  position: fixed;  
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;   
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.shareModal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem 1.2rem;
+  width: 280px;
+  max-width: 90vw;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: slideDown 0.3s ease forwards;
+}
+
+.closeModal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+}
+.closeModal:hover {
+  color: #e74c3c;
+}
+
+.shareModal p {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
+  text-align: center;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+}
+
+.socialAndLink {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.copyLinkButton {
+  background: #3498db;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 3px 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.4rem;
+}
+
+.copyLinkButton:hover {
+  background: #2980b9;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

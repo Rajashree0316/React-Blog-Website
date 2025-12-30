@@ -1,0 +1,113 @@
+.footerContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+  padding: 2.2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+}
+
+.footerSection {
+  flex: 1 1 18%;
+  min-width: 150px;
+  max-width: 220px;
+  text-align: left;
+
+}
+
+.footerSection h4 {
+  font-size: 1.3rem;
+}
+
+.footerSection ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footerSection ul li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 1.1rem;
+
+}
+
+/* Hover effect when mouse is over the link */
+.footerSection ul li a:hover {
+  text-decoration: underline;
+  color: #d14d41;
+}
+
+.footerSection ul li a:active {
+  color: #d14d41;
+  text-decoration: none;
+}
+
+.footerSection ul li a:focus {
+  color: #d14d41;
+  outline: none;
+  text-decoration: underline;
+}
+
+/* Brand styles */
+.brand .logo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.brand {
+  margin-top: -5px;
+}
+
+.logoIcon {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.brandDesc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding-right: 5px;
+  color: #333;
+
+}
+
+.footerTag {
+  cursor: pointer;
+  color: #333;
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+.footerTagButton:hover {
+  text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+  .footerSection {
+    flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerSection {
+    width: 100%;
+    max-width: none;
+  }
+
+  .footerSection h4 {
+    font-size: 1rem;
+  }
+
+  .footerSection ul li a,
+  .brandDesc {
+    font-size: 0.9rem;
+  }
+}

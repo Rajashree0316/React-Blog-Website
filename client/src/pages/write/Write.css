@@ -1,0 +1,120 @@
+.writeWrapperContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.writeWrapper {
+  flex: 1 1 50%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+.writeForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.writeFormGroup {
+  margin-bottom: 10px;
+}
+.checkboxContainer {
+  margin: 0rem 0 1rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+.writeImgPreview {
+  margin-bottom: 20px;
+}
+
+.writeImg {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.writeInput {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.iconLabel {
+  cursor: pointer;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.writeSubmit {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 1.2rem;
+}
+
+.writeSubmit:hover {
+  background-color: #218838;
+}
+checkbox input{
+  margin-right: 6px;
+}
+.backLink {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+@media (max-width: 1024px) {
+  .writeWrapperContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .writeWrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .writeWrapperContainer {
+   padding: 0px;
+  }
+  .writeInput {
+    font-size: 1rem;
+    padding: 0.5em;
+  }
+
+  .writeImgPreview img {
+    max-width: 100%;
+  }
+}

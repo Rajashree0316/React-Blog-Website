@@ -1,0 +1,106 @@
+.postsByTag-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.postsByTag-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+.postsByTag-title {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-count {
+  font-size: 1rem;
+  color: #777;
+}
+
+.follow-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.follow-btn.unfollow {
+  background: #dc3545;
+}
+
+.follow-btn:hover {
+  opacity: 0.9;
+}
+
+.postsByTag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.postsByTag-grid > * {
+  flex: 1 1 300px;
+  max-width: 350px;
+  min-width: 280px;
+}
+
+.postsByTag-spinner {
+  padding: 120px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.no-posts {
+  color: #555;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .postsByTag-container {
+    padding: 20px 10px;
+  }
+
+  .postsByTag-heading {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1.4rem;
+  }
+
+  .follow-btn {
+    width: 100%;
+  }
+
+  .postsByTag-grid {
+    gap: 20px;
+  }
+
+  .postsByTag-grid > * {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

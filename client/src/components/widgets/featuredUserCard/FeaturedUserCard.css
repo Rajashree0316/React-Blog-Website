@@ -1,0 +1,132 @@
+.featured-user-card {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.featured-header-banner {
+  background-color: #6c47ff;
+  height: 60px;
+  width: 100%;
+  position: relative;
+}
+
+.featured-header-bannerCard {
+  padding: 0px 24px 24px;
+  position: relative;
+  background-color: white;
+}
+
+.featured-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 22px;
+}
+
+/* Profile image half on banner and half on white card */
+.featured-header-profile {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  position: absolute;
+  top: -36px;
+  left: -4px;
+  background-color: white;
+  z-index: 2;
+}
+
+.profile-header-text {
+  margin:0.5rem 0 0.6rem 4rem;;
+  z-index: 1;
+}
+
+.featured-profile-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #420a2b;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+.featured-profile-name:hover{
+  text-decoration:underline;
+  color: blue;
+}
+
+
+.featured-follow-btn {
+  background-color: #1a6b2b;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.3s ease;
+
+}
+
+.featured-profile-bio {
+  margin-top: 16px;
+  font-size: 1rem;
+  color: #242121;
+}
+
+.featured-info {
+  margin-top: 24px;
+}
+
+.featured-info-personal h6 {
+  font-size: 12px;
+  color: #807f7f;
+}
+
+.featured-info-personal p {
+  font-size: 16px;
+  color: #362f2f;
+}
+
+.featured-info-personal {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .featured-user-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .featured-header {
+    padding-left: 16px;
+  }
+
+  .featured-header-profile {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+  }
+
+  .profile-header-text {
+    margin-left: 76px;
+  }
+
+  .featured-profile-name {
+    font-size: 1rem;
+  }
+}

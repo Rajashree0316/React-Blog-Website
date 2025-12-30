@@ -1,0 +1,60 @@
+/* ========= PAGINATION ========= */
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.pagination-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #d6e4ff;
+  border-color: #007bff;
+  color: #007bff;
+  transform: scale(1.05);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+  transform: scale(1.15);
+}
+
+.pagination-btn:focus-visible {
+  outline: 3px solid #0056b3;
+  outline-offset: 2px;
+}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 600px) {
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .pagination-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}

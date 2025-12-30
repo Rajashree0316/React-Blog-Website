@@ -1,0 +1,155 @@
+/* ==== Tabs ==== */
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tabButton {
+  background-color: #f3f3f3;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.tabButton.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+/* ==== Section Header ==== */
+.section h4 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+/* ==== Preference Item ==== */
+.preferenceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+.preferenceInfo {
+  flex: 1 1 70%;
+  min-width: 0;
+}
+
+.preferenceInfo strong {
+  display: block;
+  font-size: 15px;
+  color: #222;
+}
+
+.preferenceInfo p {
+  color: #666;
+  font-size: 13px;
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+/* ==== Toggle Switch ==== */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: background-color 0.4s ease;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.4s ease, background-color 0.4s ease;
+}
+
+input:checked + .slider {
+  background-color: #2563eb;
+}
+
+input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+/* ==== Buttons ==== */
+.commonButtonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.commonBtn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.saveBtn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.cancelBtn {
+  background-color: #eee;
+  color: #333;
+}
+.resetBtn {
+  background-color: #f87171;
+  color: white;
+}
+.inlineLink {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.inlineLink:hover {
+  text-decoration: none;
+}
+
+
+
+/* ==== Responsive ==== */
+@media (max-width: 600px) {
+  .preferenceItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,13 @@
+/* Spinner.css */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  transition: transform 0.3s ease;
+}
+
+.spinner-container:hover {
+  transform: scale(1.05) rotate(2deg);
+  filter: drop-shadow(0 0 10px #bc1d3d);
+}

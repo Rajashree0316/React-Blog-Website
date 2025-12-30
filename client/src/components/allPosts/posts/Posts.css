@@ -1,0 +1,13 @@
+.postsContainer {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+  gap: 20px;
+}
+@media (max-width: 320px) {
+  .postsContainer{
+    padding: 0;
+  }
+}
