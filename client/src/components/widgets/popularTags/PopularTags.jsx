@@ -25,6 +25,11 @@ const response = await fetch(`${API}/tags`);        const data = await response.
     fetchTags();
   }, []);
 
+  // ⛔ Hide widget completely if finished loading and no tags
+if (!loading && (!tags || tags.length === 0)) {
+  return null;
+}
+
   const displayedTags = showAll ? tags : tags.slice(0, 8);
 
   return (

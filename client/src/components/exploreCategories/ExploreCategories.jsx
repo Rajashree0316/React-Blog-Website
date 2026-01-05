@@ -32,43 +32,47 @@ export default function ExploreCategories() {
   };
 
   return (
-    <div className="exploreContainer">
-      <div className="commonHeadings">
-        <h2>Explore Categories</h2>
-        <p>Discover amazing topics and dive into creative ideas</p>
-      </div>
+    <>
+      {tags.length > 0 && (
+        <div className="exploreContainer">
+          <div className="commonHeadings">
+            <h2>Explore Categories</h2>
+            <p>Discover amazing topics and dive into creative ideas</p>
+          </div>
 
-      <div className="exploreGrid">
-        {tags.slice(0, 8).map((tag, index) => {
-          const Icon = icons[index % icons.length];
-          return (
-            <div key={index} className="exploreCard">
-              <div className="iconWrapper">
-                <Icon className="categoryIcon" />
-              </div>
-              <h3 className="cardTitle">{tag.name}</h3>
-              <p className="cardDesc">{tag.description}</p>
-              <p className="postCount">
-                {tag.count} post{tag.count !== 1 ? "s" : ""}
-              </p>
-              <button
-                className="exploreButton"
-                onClick={() => handleExploreClick(tag.name)}
-              >
-                Explore →
+          <div className="exploreGrid">
+            {tags.slice(0, 8).map((tag, index) => {
+              const Icon = icons[index % icons.length];
+              return (
+                <div key={index} className="exploreCard">
+                  <div className="iconWrapper">
+                    <Icon className="categoryIcon" />
+                  </div>
+                  <h3 className="cardTitle">{tag.name}</h3>
+                  <p className="cardDesc">{tag.description}</p>
+                  <p className="postCount">
+                    {tag.count} post{tag.count !== 1 ? "s" : ""}
+                  </p>
+                  <button
+                    className="exploreButton"
+                    onClick={() => handleExploreClick(tag.name)}
+                  >
+                    Explore →
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          {tags.length > 8 && (
+            <div className="exploreAllWrapper">
+              <button className="exploreAllButton" onClick={handleExploreAll}>
+                Explore All Categories
               </button>
             </div>
-          );
-        })}
-      </div>
-
-      {tags.length > 8 && (
-        <div className="exploreAllWrapper">
-          <button className="exploreAllButton" onClick={handleExploreAll}>
-            Explore All Categories
-          </button>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 }

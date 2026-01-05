@@ -1,105 +1,72 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API, PF } from "../../config";
-
 import "./AuthorProfileCard.css";
 import { useNavigate } from "react-router-dom";
 import Spinner, { SpinnerTypes } from "../common/commonSpinner/Spinner";
+
+const STATIC_AUTHOR = {
+  username: "rajashreeasok16",
+  fullName: "Rajashree Asokkumar",
+  title: "Frontend Developer",
+  bio: "With 2 years of experience in web development, I created this blog to help others by gathering and sharing valuable information in one place — a platform where everything you need is just a search away.",
+  profilePic: "/rajashreeasok.jpg",
+};
+
 const AuthorProfileCard = () => {
-  const [author, setAuthor] = useState(null);
   const [blogCount, setBlogCount] = useState(0);
-  const [readers, setReaders] = useState([]);
+  const [readersCount, setReadersCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const username = "rajashreeasok16";
+  const username = STATIC_AUTHOR.username;
 
-  // 1.Fetch author + blogs
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCounts = async () => {
       try {
-        const [authorRes, postsRes] = await Promise.all([
-          axios.get(`${API}/users/username/${username}`),
+        const [postsRes, readersRes] = await Promise.all([
           axios.get(`${API}/posts?user=${username}`),
+          axios.get(`${API}/users/readers/${username}`),
         ]);
-        setAuthor(authorRes.data);
+
         setBlogCount(postsRes.data.length);
+        setReadersCount(Array.isArray(readersRes.data) ? readersRes.data.length : 0);
       } catch (err) {
-        console.error("Error loading author or posts", err);
+        console.error("Error loading counts", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchCounts();
   }, []);
 
-  //2. Fetch readers (excluding author)
-  useEffect(() => {
-    const fetchReaders = async () => {
-      try {
-        const res = await axios.get(`${API}/users/readers/${username}`);
-        if (Array.isArray(res.data)) {
-          setReaders(res.data);
-        } else {
-          setReaders([]);
-        }
-      } catch (err) {
-        console.error("Failed to fetch readers", err);
-        setReaders([]);
-      }
-    };
-
-    fetchReaders();
-  }, []);
-
-  // 🔄 Show Spinner while loading
   if (loading) {
     return <Spinner type={SpinnerTypes.PACMAN} size={90} color="#bc1d3d" />;
   }
 
-  if (!author) return <div>Error loading author info</div>;
-
   return (
     <div className="blogSpace-profile-card">
-      {/* <img
-        src={
-          author.profilePic?.startsWith("http")
-            ? author.profilePic
-            : `/images/${author.profilePic}`
-        }
-        alt={author.username}
-        onError={(e) => {
-          e.target.src = "https://randomuser.me/api/portraits/women/44.jpg";
-        }}
-      /> */}
-
       <img
-        src={
-          author.profilePic?.startsWith("http")
-            ? author.profilePic
-            : PF + author.profilePic
-        }
-        alt={author.username}
+        src={STATIC_AUTHOR.profilePic}
+        alt={STATIC_AUTHOR.username}
         onError={(e) => {
-          e.target.src = PF + "default-placeholder.jpg";
+          e.target.src = "/default-placeholder.jpg";
         }}
       />
 
-      <h4>{author.fullName || author.username}</h4>
-      {author.title && <p className="blogSpace-title">{author.title}</p>}
+      <h4>{STATIC_AUTHOR.fullName}</h4>
+      <p className="blogSpace-title">{STATIC_AUTHOR.title}</p>
 
-      <p>
-        {author.bio ||
-          "With 2 years of experience in web development, I created this blog to help others by gathering and sharing valuable information in one place — a platform where everything you need is just a search away."}
-      </p>
+      <p>{STATIC_AUTHOR.bio}</p>
 
       <div className="blogSpaceStats">
         <span className="clickable" onClick={() => navigate("/personal-blogs")}>
           {blogCount}+ Blogs Posted
         </span>
+
         <span className="clickable" onClick={() => navigate("/readers")}>
-          {readers.length}+ Readers
+          {readersCount}+ Readers
         </span>
       </div>
     </div>

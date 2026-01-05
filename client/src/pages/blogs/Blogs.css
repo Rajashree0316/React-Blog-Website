@@ -283,3 +283,80 @@
     font-size: 1.1rem;
   }
 }
+/* ========= EMPTY STATE ========= */
+.empty-state {
+  margin: 4rem 0;
+  padding: 3rem 2rem;
+  text-align: center;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f6fbfc, #e9f7fa);
+  animation: fadeSlideUp 0.6s ease forwards;
+}
+
+.empty-state h2 {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  color: #1a1a1a;
+}
+
+.empty-state p {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  color: #555;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ========= EMPTY ILLUSTRATION ========= */
+.empty-illustration {
+  position: relative;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-card {
+  width: 120px;
+  height: 80px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  animation: float 3.5s ease-in-out infinite;
+}
+
+.floating-card.small {
+  position: absolute;
+  width: 90px;
+  height: 60px;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-140%);
+  animation-delay: 0.5s;
+  opacity: 0.9;
+}
+
+.floating-card.tiny {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  bottom: -10px;
+  right: 50%;
+  transform: translateX(140%);
+  animation-delay: 1s;
+  opacity: 0.8;
+}
+
+/* ========= FLOAT ANIMATION ========= */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -15,13 +15,12 @@ export default function Blogs() {
   const [posts, setPosts] = useState([]);
   const [openSharePostId, setOpenSharePostId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [featuredPost, setFeaturedPost] = useState(null);
   const [sortType, setSortType] = useState("Top");
   const [timeRange, setTimeRange] = useState("Month");
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 9;
 
+  const postsPerPage = 9;
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const tag = params.get("tag");
@@ -31,125 +30,72 @@ export default function Blogs() {
   const handleOpenShare = (postId) => setOpenSharePostId(postId);
   const handleCloseShare = () => setOpenSharePostId(null);
 
-  // Scroll to tag section
+  /* Scroll to tagged section */
   useEffect(() => {
     if (tag && blogsListRef.current) {
       setTimeout(() => {
-        blogsListRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 500);
+        blogsListRef.current.scrollIntoView({ behavior: "smooth" });
+      }, 400);
     }
   }, [tag]);
 
-  // Fetch Featured Post
+  /* Fetch featured post */
   const fetchFeaturedPost = async () => {
     try {
       const res = await fetch(`${API}/posts/featured`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.length > 0) {
-          setFeaturedPost(data[0]);
-          return data[0];
-        } else {
-          setFeaturedPost(null);
-        }
-      } else {
-        setFeaturedPost(null);
-      }
-    } catch (err) {
-      console.error("Failed to fetch featured post", err);
+      const data = await res.json();
+      setFeaturedPost(data?.[0] || null);
+      return data?.[0]?._id || null;
+    } catch {
       setFeaturedPost(null);
+      return null;
     }
-    return null;
   };
 
-  // Fetch All Posts
-  const fetchPosts = async (excludedId) => {
+  /* Fetch posts */
+  const fetchPosts = async (excludeId) => {
     setLoading(true);
-    setError(null);
     try {
-      const response = await fetch(
+      const res = await fetch(
         `${API}/posts?sort=${sortType}&time=${timeRange}${
           tag ? `&tag=${encodeURIComponent(tag)}` : ""
         }`
       );
-      if (!response.ok)
-        throw new Error(`Failed to fetch posts: ${response.statusText}`);
+      const data = await res.json();
 
-      const data = await response.json();
-      const filtered = excludedId
-        ? data.filter((post) => post._id !== excludedId)
+      const filtered = excludeId
+        ? data.filter((p) => p._id !== excludeId)
         : data;
 
       if (highlightId) {
-        const highlightedPost = filtered.find(
-          (post) => post._id === highlightId
-        );
-        const otherPosts = filtered.filter((post) => post._id !== highlightId);
-        setPosts(highlightedPost ? [highlightedPost, ...otherPosts] : filtered);
+        const highlighted = filtered.find((p) => p._id === highlightId);
+        const others = filtered.filter((p) => p._id !== highlightId);
+        setPosts(highlighted ? [highlighted, ...others] : filtered);
       } else {
         setPosts(filtered);
       }
 
       setCurrentPage(1);
-    } catch (err) {
-      console.error("Error fetching posts:", err);
-      setError("Failed to load posts");
+    } catch {
       setPosts([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Sequential fetch: featured first, then posts
+  /* Sequential fetch */
   useEffect(() => {
     (async () => {
-      const featured = await fetchFeaturedPost();
-      await fetchPosts(featured?._id);
+      const featuredId = await fetchFeaturedPost();
+      await fetchPosts(featuredId);
     })();
-  }, [location.search, highlightId, sortType, timeRange]);
+  }, [location.search, sortType, timeRange, highlightId]);
 
-  // Pagination
+  /* Pagination */
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-  const filterPosts = () => {
-    const now = new Date();
-    let filtered = [...posts];
-
-    filtered = filtered.filter((post) => {
-      const postDate = new Date(post.createdAt);
-      switch (timeRange) {
-        case "Week":
-          return (now - postDate) / (1000 * 60 * 60 * 24) <= 7;
-        case "Month":
-          return (now - postDate) / (1000 * 60 * 60 * 24) <= 30;
-        case "Year":
-          return (now - postDate) / (1000 * 60 * 60 * 24) <= 365;
-        default:
-          return true;
-      }
-    });
-
-    switch (sortType) {
-      case "Latest":
-        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        break;
-      case "Top":
-        filtered.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-        break;
-      default:
-        break;
-    }
-
-    return filtered.slice(indexOfFirstPost, indexOfLastPost);
-  };
-
-  const currentPosts = filterPosts();
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(posts.length / postsPerPage);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="commonContainer">
@@ -164,61 +110,78 @@ export default function Blogs() {
 
       <div className="blogs-main-content">
         <div className="blogs-left" ref={blogsListRef}>
-          {/* 🔄 Loading Spinner */}
+          {/* 🔄 Loading */}
           {loading && (
-            <Spinner type={SpinnerTypes.HASH} size={100} color="#06acbfff" />
+            <Spinner type={SpinnerTypes.HASH} size={90} color="#06acbf" />
           )}
 
-          {/* ✅ Only show heading if featured post exists */}
-          <div className="featured-post-container-wrapper">
-            {featuredPost && (
+          {/* 🫥 Empty State */}
+          {!loading && posts.length === 0 && (
+            <div className="empty-state">
+              <div className="empty-illustration">
+                <div className="floating-card"></div>
+                <div className="floating-card small"></div>
+                <div className="floating-card tiny"></div>
+              </div>
+              <h2>No posts yet</h2>
+              <p>
+                Looks quiet here 🌱  
+                New stories are on the way. Try exploring categories meanwhile.
+              </p>
+            </div>
+          )}
+
+          {/* ⭐ Featured */}
+          {!loading && featuredPost && (
+            <div className="featured-post-container-wrapper">
               <Link to="/featured-posts" className="clickable-posts">
                 <h2 className="featured-post-container-heading">
                   🌟 Highlighted Creations
                 </h2>
               </Link>
-            )}
-            {featuredPost && <FeaturedPost post={featuredPost} layout="row" />}
-          </div>
-
-          <div className="other-posts-container">
-            <h2 className="all-posts-heading">
-              🚀 Explore the Latest Insights
-            </h2>
-            <SortFilterBar
-              sortType={sortType}
-              setSortType={setSortType}
-              timeRange={timeRange}
-              setTimeRange={setTimeRange}
-            />
-
-            <div className="blogs-list">
-              {currentPosts.map((post, index) => (
-                <div
-                  key={post._id}
-                  className="blog-card-wrapper"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <Post
-                    post={post}
-                    index={index}
-                    isHighlighted={
-                      index === 0 && !!highlightId && currentPage === 1
-                    }
-                    isShareOpen={openSharePostId === post._id}
-                    onOpenShare={() => handleOpenShare(post._id)}
-                    onCloseShare={handleCloseShare}
-                  />
-                </div>
-              ))}
+              <FeaturedPost post={featuredPost} layout="row" />
             </div>
+          )}
 
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={paginate}
-            />
-          </div>
+          {/* 📚 Posts */}
+          {!loading && posts.length > 0 && (
+            <div className="other-posts-container">
+              <h2 className="all-posts-heading">
+                🚀 Explore the Latest Insights
+              </h2>
+
+              <SortFilterBar
+                sortType={sortType}
+                setSortType={setSortType}
+                timeRange={timeRange}
+                setTimeRange={setTimeRange}
+              />
+
+              <div className="blogs-list">
+                {currentPosts.map((post, index) => (
+                  <div
+                    key={post._id}
+                    className="blog-card-wrapper"
+                    style={{ animationDelay: `${index * 120}ms` }}
+                  >
+                    <Post
+                      post={post}
+                      isHighlighted={index === 0 && !!highlightId}
+                      isShareOpen={openSharePostId === post._id}
+                      onOpenShare={() => handleOpenShare(post._id)}
+                      onCloseShare={handleCloseShare}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
 
         <BlogSidebar />
