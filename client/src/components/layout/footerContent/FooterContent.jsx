@@ -60,22 +60,24 @@ export default function FooterContent() {
         </ul>
       </div>
 
-      {/* Dynamic Categories */}
-      <div className="footerSection">
-        <h4>Categories</h4>
-        <ul>
-          {tags.slice(0, 4).map((tag, index) => (
-            <li key={index}>
-              <div
-                className="footerTag"
-                onClick={() => handleTagClick(tag.name)}
-              >
-                {tag.name.charAt(0).toUpperCase() + tag.name.slice(1)}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Dynamic Categories → Only show if tags exist */}
+      {tags.length > 0 && (
+        <div className="footerSection">
+          <h4>Categories</h4>
+          <ul>
+            {tags.slice(0, 4).map((tag, index) => (
+              <li key={index}>
+                <div
+                  className="footerTag"
+                  onClick={() => handleTagClick(tag.name)}
+                >
+                  {tag.name.charAt(0).toUpperCase() + tag.name.slice(1)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Legal */}
       <div className="footerSection">
