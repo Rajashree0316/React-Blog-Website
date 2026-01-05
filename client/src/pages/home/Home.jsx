@@ -19,6 +19,13 @@ export default function Home() {
   const isLoggedIn = Boolean(user);
 
   useEffect(() => {
+    // Only fetch posts if the user is logged in
+    if (!isLoggedIn) {
+      setPosts([]);
+      setLoading(false);
+      return;
+    }
+
     const fetchPosts = async () => {
       setLoading(true);
       try {
@@ -33,7 +40,7 @@ export default function Home() {
     };
 
     fetchPosts();
-  }, [search]);
+  }, [search, isLoggedIn]);
 
   return (
     <>
@@ -43,22 +50,22 @@ export default function Home() {
         <ExploreCategories />
         {isLoggedIn && <IntroSection />}
 
-        {/* 🔄 Loading State */}
-        {loading && (
+        {/* 🔄 Show spinner only if logged in */}
+        {isLoggedIn && loading && (
           <div className="postsWrapper">
             <Spinner type={SpinnerTypes.PACMAN} size={80} color="#bc1d3d" />
           </div>
         )}
 
-        {/* ✅ Posts Exist */}
-        {!loading && posts.length > 0 && (
+        {/* ✅ Show posts only if logged in */}
+        {isLoggedIn && !loading && posts.length > 0 && (
           <div className="postsWrapper">
             <h1>Latest Posts</h1>
             <Posts posts={posts} loading={false} />
           </div>
         )}
 
-        {/* ❌ No Posts → Show nothing */}
+        {/* ❌ Logged out or no posts → show nothing */}
       </div>
     </>
   );
